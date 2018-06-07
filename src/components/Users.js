@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 
 
 import "bootstrap/dist/css/bootstrap.css";
-import {Grid, Button, Navbar, Table} from 'react-bootstrap';
+// import {Grid, Button, Navbar, Table} from 'react-bootstrap';
 import AddUser from './AddUser';
 import Edit from './Edit';
-import RowT from './RowT';
+import RowTable from './RowTable';
 
 //const history = createBrowserHistory();
 
@@ -27,8 +27,12 @@ class Users extends Component {
             .handleDelete
             .bind(this);
 
-            this.rendRow = this
-            .rendRow
+            // this.renderData = this
+            // .renderData
+            // .bind(this);
+
+            this.loadData = this
+            .loadData
             .bind(this);
     }
 
@@ -153,56 +157,42 @@ class Users extends Component {
         );
     }
 
-    componentDidMount() {
-      this.rendRow();
-    };
-    loadUsers() { 
-        return  fetch('http://localhost:3001/users')
-        .then(function (response) {
-               return response.json();
-          })
-              .then(function (users) {
-                  let arr = [];
-                  for (let i = 0; i < users.length; i++) {
-                      //console.log(users[i]);
-                      let id = users[i].id;
-                      let name = users[i].name;
-                      let email = users[i].email;
-                      arr.push([id, name, email]);
-                  }
-                  return arr;
-                })
-                .catch(console.error);
-        };
-//??????????????????????????????????????????????????????????????????????
-    async rendRow(){
-        var arr = await this.loadUsers();
-    //var data;
-    const data = arr.map(function(item){
-        //console.log(item);
-       //<RowT id={item[0]} name={item[1]} email={item[2]} /> 
-         return (
-               <tr>
-                <td>{item[0]}</td>
-                <td>{item[1]}</td>
-                <td>{item[2]}</td>                
-            </tr>
-         )
-    })
- console.log(arr);
-    
-this.setState({
-    arr: arr
-});
-console.log(this.state.arr);
-    
-return (
-            <tbody>
-                {data}
-            </tbody>
-        )
-        
+    // componentDidMount() {
+    //   this.renderData();
+    // };
+
+    loadData(){
+       return (async () => {
+            const rawResponse = await fetch('http://localhost:3001/users');
+            const content = await rawResponse.json();
+         
+            content.map((item)=>{
+                console.log(item.id);
+                return(
+                    < RowTable id={item.id} name={item.name} email={item.email}/>
+                )
+            })
+            
+          })();
     }
+
+    // loadUsers() { 
+    //     return  fetch('http://localhost:3001/users')
+    //     .then(function (response) {
+    //            return response.json();
+    //       })
+    //       .then(function(responce){
+    //           //console.log(responce);
+    //       })
+         
+    //             .catch(console.error);
+    //     };
+//??????????????????????????????????????????????????????????????????????
+    //  renderData(){
+    //     let data = this.loadData();
+
+    //     console.log(data);
+    // }
 
     render() {
         //@ це можна по функціям рознести, що б було красивіше
@@ -232,8 +222,9 @@ return (
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        {/* {console.log(this.rendRow())} */}
-                    {this.rendRow()}
+                       
+                    {this.loadData()}
+                    {/* {console.log('this.loadData(): ', this.loadData())} */}
                     </table>
                 </div>
             )

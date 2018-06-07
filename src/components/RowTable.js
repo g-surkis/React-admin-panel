@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 
- class RowT extends Component {
+ class RowTable extends Component {
     constructor(props){
         super(props)
     }
@@ -17,4 +17,4 @@ import React, {Component} from 'react';
     }
 }
 
-export default RowT;
+export default RowTable;
