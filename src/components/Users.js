@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 // import {Grid, Button, Navbar, Table} from 'react-bootstrap';
 import AddUser from './AddUser';
 import Edit from './Edit';
-import RowTable from './RowTable';
+import TableUsers from './TableUsers';
 
 //const history = createBrowserHistory();
 
@@ -146,7 +146,7 @@ class Users extends Component {
     );
   }
 
-  componentDidMount() {
+  componentWillMount() {// will or did? what better?
     this.loadData();
   }
 
@@ -158,43 +158,27 @@ class Users extends Component {
   }
 
   render() {
-    //@ це можна по функціям рознести, що б було красивіше
     if (this.state.add) {
       return (
         <div>
-          <AddUser lastid={this.state.numId} />
+          <div>
+            <AddUser lastid={this.state.numId} />
+          </div>
+          <div className="container">
+            
+
+            <TableUsers arr={this.state.arr} />
+          </div>
         </div>
       );
-      //@ тут простого else достатньо
     } else {
       return (
-        <div>
+        <div className="container">
           <button onClick={this.addUser.bind(this)} className="btn btn-warning">
             Add user!
           </button>
-          <table id="users" className="table-bordered">
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.arr.map((item, i) => {
-                console.log(i);
-                return (
-                  <RowTable
-                    id={item.id}
-                    name={item.name}
-                    email={item.email}
-                    key={i}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
+
+          <TableUsers arr={this.state.arr} />
         </div>
       );
     }

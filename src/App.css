@@ -26,3 +26,20 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.appearWindow{
+  position: absolute;
+  vertical-align: center;
+  padding: 10%;
+  margin-left: 5%;
+  margin-top: 5%;
+  height: 300px;
+  width: 90%;
+  z-index: 999;
+  background-color: antiquewhite;
+  opacity: 0.95;
+}
+
+.marginInForm {
+margin: 10px;
+}
