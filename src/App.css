@@ -23,11 +23,19 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.appearWindow{
+.head {
+  text-align: center;
+}
+
+.appearWindow {
   position: absolute;
   vertical-align: center;
   padding: 10%;
@@ -41,5 +49,9 @@
 }
 
 .marginInForm {
-margin: 10px;
+  margin: 10px;
+}
+
+.empty {
+  margin-bottom: 25px;
 }

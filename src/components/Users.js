@@ -146,14 +146,15 @@ class Users extends Component {
     );
   }
 
-  componentWillMount() {// will or did? what better?
+  componentWillMount() {
+    // will or did? what better?
     this.loadData();
   }
 
   async loadData() {
     const rawResponse = await fetch('http://localhost:3001/users');
     const content = await rawResponse.json();
-    await console.log(content);
+    //await console.log(content);
     await this.setState({ arr: content });
   }
 
@@ -164,9 +165,8 @@ class Users extends Component {
           <div>
             <AddUser lastid={this.state.numId} />
           </div>
-          <div className="container">
-            
 
+          <div className="container">
             <TableUsers arr={this.state.arr} />
           </div>
         </div>
@@ -174,10 +174,11 @@ class Users extends Component {
     } else {
       return (
         <div className="container">
-          <button onClick={this.addUser.bind(this)} className="btn btn-warning">
+          <div className="empty" />
+          <button onClick={this.addUser.bind(this)} className="btn btn-success">
             Add user!
           </button>
-
+          <div className="empty" />
           <TableUsers arr={this.state.arr} />
         </div>
       );
