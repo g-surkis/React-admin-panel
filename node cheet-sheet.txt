@@ -1,0 +1,22 @@
+﻿Ініціалізація проекту на React
+npx create-react-app my-app
+cd my-app
+npm start
+
+Збірка React-аплікації
+npm run build
+
+Додатковий функціонал до React
+npm install --save react-router-dom
+npm install --save react-bootstrap bootstrap@3
+
+Ініціалізація проекту на Node.js в рез. утворюється файл package.json
+npm init
+
+Автоформат коду
+npm install --save husky lint-staged prettier
+
+Node.js shoud Learn
+1. Ділення DOM на компонети
+
+

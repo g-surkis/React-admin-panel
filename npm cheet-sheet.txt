@@ -1,0 +1,15 @@
+
+Створення файлу package.json
+npm init
+
+Встановлення бібліотеки
+npm install "librery"
+
+Встановлення webpak глобально
+npm  install -g webpack
+
+Встановлення поля "dependencies" для бібліотеки в package.json
+npm i "librery" --save
+
+Встановлення поля "devDependencies" для бібліотеки в package.json
+npm i "librery" --save-вум
