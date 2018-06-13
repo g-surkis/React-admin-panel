@@ -47,29 +47,6 @@
       }
     },
     {
-      "id": 4,
-      "name": "Patricia Lebsack",
-      "username": "Karianne",
-      "email": "Julianne.OConner@kory.org",
-      "address": {
-        "street": "Hoeger Mall",
-        "suite": "Apt. 692",
-        "city": "South Elvis",
-        "zipcode": "53919-4257",
-        "geo": {
-          "lat": "29.4572",
-          "lng": "-164.2990"
-        }
-      },
-      "phone": "493-170-9623 x156",
-      "website": "kale.biz",
-      "company": {
-        "name": "Robel-Corkery",
-        "catchPhrase": "Multi-tiered zero tolerance productivity",
-        "bs": "transition cutting-edge web services"
-      }
-    },
-    {
       "id": 7,
       "name": "Kurtis Weissnat",
       "username": "Elwyn.Skiles",
@@ -94,9 +71,9 @@
     },
     {
       "id": 8,
-      "name": "Nicholas Runolfsdottir V",
+      "name": "Nicholas Runolfsdottir ",
       "username": "Maxime_Nienow",
-      "email": "lonia@com.com",
+      "email": "low@com.com",
       "address": {
         "street": "Ellsworth Summit",
         "suite": "Suite 729",
@@ -115,11 +92,6 @@
         "bs": "e-enable extensible e-tailers"
       },
       "{\"name\": \"Leonid Brykin\",\n\t\"email\": \"lonia@com.com\"\n}": ""
-    },
-    {
-      "email": "lonia@com.com",
-      "id": 9,
-      "name": "Kostia Hanter"
     },
     {
       "name": "Kostia",
@@ -142,13 +114,8 @@
       "id": 17
     },
     {
-      "name": "аааааааа",
-      "email": "аааа@sdf/hd.c",
-      "id": 18
-    },
-    {
-      "name": "аааааааа",
-      "email": "yu@sdfhd.c",
+      "name": "Someone",
+      "email": "yu@self.i",
       "id": 19
     },
     {
@@ -165,6 +132,21 @@
       "name": "Zbyszek",
       "email": "zb@wa.pl",
       "id": 22
+    },
+    {
+      "name": "Daniel",
+      "email": "dan@nig.com",
+      "id": 23
+    },
+    {
+      "name": "Lenka",
+      "email": "lena@br.sl",
+      "id": 24
+    },
+    {
+      "name": "Slava",
+      "email": "slava@hero.if",
+      "id": 25
     }
   ]
 }

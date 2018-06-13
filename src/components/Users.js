@@ -22,8 +22,7 @@ class Users extends Component {
     //#в мене стоїть плагін для форматування коду.
     //там потрібно покопатись в настройках. в майбутньому врахую
 
-    this.handleDelete = this.handleDelete.bind(this);
-
+    this.addUser = this.addUser.bind(this);
     this.loadData = this.loadData.bind(this);
   }
 
@@ -129,10 +128,6 @@ class Users extends Component {
   //        return arr;
   // };
 
-  handleDelete(key) {
-    alert(key);
-  }
-
   addUser() {
     this.setState({ add: true });
   }
@@ -175,7 +170,7 @@ class Users extends Component {
       return (
         <div className="container">
           <div className="empty" />
-          <button onClick={this.addUser.bind(this)} className="btn btn-success">
+          <button onClick={this.addUser} className="btn btn-success">
             Add user!
           </button>
           <div className="empty" />

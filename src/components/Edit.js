@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
 import { Grid, Button, Navbar, Table } from 'react-bootstrap';
 
-import editFetch from '../services/users';
+import { editFetch } from '../services/users';
 
 class Edit extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      valueName: this.props.name,
+      valueEmail: this.props.email
+    };
+
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangeEmail = this.handleChangeEmail.bind(this);
   }
 
-  handleEdit() {
-    // alert(this.props.nameUser);
-    // alert(this.props.emailUser);
+  handleChangeName(event) {
+    this.setState({ valueName: event.target.value });
+    console.log(event.target.value);
+  }
+
+  handleChangeEmail(event) {
+    this.setState({ valueEmail: event.target.value });
+    console.log(event.target.value);
+  }
+
+  handleEdit(event) {
     let id = this.props.id;
     alert(id);
     //@ передивись відео як працювати з елементами форми
@@ -20,53 +37,42 @@ class Edit extends Component {
     //@ <input type="text" value={this.state.value} onChange={this.handleChange} />
     //@ або не контрольовані через ref
     //@ <input type="text" ref={(input) => this.input = input} />
-    let name = document.getElementById('name');
-    let email = document.getElementById('email');
-    let obj = {
-      name: name.value,
-      email: email.value
-    };
 
-    //@ потрібно створити папку services і в ній файл users.js з функціями, де
-    //@ виконуються запити через fetch, що б компоненти не знали як ідуть запити до бекенду і при
-    //@ потребі наприклад зміни url можна було все робити в одному місці
+    //тут про ref мабуть треба ще почитати, бо я відео дивився, а згадати суті не можу
+    let name = this.state.valueName;
+    let email = this.state.valueEmail;
+    let obj = {
+      name,
+      email
+    };
+    console.log(this.props);
+    console.log(obj);
+    //@ !потрібно створити папку services і в ній файл users.js з функціями, де
+    //@ !виконуються запити через fetch, що б компоненти не знали як ідуть запити до бекенду і при
+    //@ !потребі наприклад зміни url можна було все робити в одному місці
     //@ потрібно алерт показувати, що все зберіглось добре, якщо виникла помилка, також це потрібно
     //@показати
-    // fetch("http://localhost:3001/users/" + id, {
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-type": "application/json"
-    //   },
-    //   method: "PATCH",
-    //   body: JSON.stringify(obj)
-    // })
-    //   .then(function(res) {
-    //     console.log(res);
-    //   })
-    //   .catch(function(res) {
-    //     console.log(res);
-    //   });
-    editFetch(id, obj); //??????????????IS THIS CORRERCT?
+
+    editFetch(id, obj); //??????????????   IS THIS CORRERCT?
+    event.preventDefault();
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="appearWindow">
         <h1 className="brand">Редагування даних користувача</h1>
         {/* <!--//@ цих полів не потрібно, тому що форми для SPA не перезавантажуться, тому
                 id="addUser треба забрати і повісити обробник на onSubmit, щоб на enter також спрацьовувала форма
                 --> */}
-        <form
-          id="addUser" //незнаю достеменно чи ці поля обовязкові в даному випадку
-          //але працює без них(а з ними - не працює)(це мабуть з php таке в мене лишилося))
-          //method="post"
-          //action='http://localhost:3001/users'
-          className="navbar-form input-group"
-        >
+        <form onSubmit={this.handleEdit} className="navbar-form input-group">
           <label htmlFor="name">
             Name
-            {/* <!--//@ id="name" не потрібно і в решті елементах також --> */}
-            <input type="text" id="name" defaultValue={this.props.nameUser} />
+            <input
+              type="text"
+              onChange={this.handleChangeName}
+              defaultValue={this.state.valueName}
+            />
           </label>
 
           <label htmlFor="email">
@@ -74,7 +80,8 @@ class Edit extends Component {
             <input
               type="email"
               id="email"
-              defaultValue={this.props.emailUser}
+              onChange={this.handleChangeEmail}
+              defaultValue={this.state.valueEmail}
             />
           </label>
           <span />
@@ -83,7 +90,7 @@ class Edit extends Component {
             //@ краще в одну стрічку писати, що б було легше читати і краще робити в конструкторі
             // @ this.handleEdit = this.handleEdit.bind(this)
             // @ тоді тут можна просто писати onClick={this.handleEdit}
-            onClick={this.handleEdit.bind(this)}
+            onClick={this.handleEdit}
             className="btn btn-primery btn-success"
           >
             ADD
