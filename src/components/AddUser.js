@@ -1,54 +1,79 @@
 import React, { Component } from 'react';
 
 //import "bootstrap/dist/css/bootstrap.css";
-import { Form, Button } from 'react-bootstrap';
-import { addFetch } from '../services/users';
-
-//не розумію чому перезагружається сторінка після надсилання даних
-//це стандартна поведінка браузера??? ДОМ при цьому ж не міняється
-//@ для форми стандратна поведінка, коли сабмітись форму, тому потрібно обробляти подію onSubmit і для події робити
-//@ e.preventDefault();
+import { Form } from 'react-bootstrap';
+import { addUser } from '../services/users';
 
 class AddUser extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
-  }
 
-  handleAdd() {
-    var name = document.getElementById('name');
-    var email = document.getElementById('email');
-    var obj = {
-      name: name.value,
-      email: email.value
+    this.state = {
+      name: 'name',
+      email: 'email@domen.com'
     };
 
-    addFetch(obj);
+    this.handleAdd = this.handleAdd.bind(this);
+
+    this.handleAddName = this.handleAddName.bind(this);
+    this.handleAddEmail = this.handleAddEmail.bind(this);
   }
 
+  handleAddName(event) {
+    this.setState({ name: event.target.value });
+  }
+
+  handleAddEmail(event) {
+    this.setState({ email: event.target.value });
+    console.log(event.target.value);
+  }
+
+  handleAdd(event) {
+    event.preventDefault();
+    let name = this.state.name;
+    let email = this.state.email;
+    let userData = {
+      name,
+      email
+    };
+
+    addUser(userData);
+  }
+  //також після добавлення нового користувача, він не появляється в таблиці без перезагрузки іне зникає
+  //діалогове вікно. підкажи що тут зробити
+
   render() {
-    // console.log(document.form.addUser);
     return (
       <div className="appearWindow">
-        //тут має бути ще хрестик відміни спливаючого вікна. пізніше дороблю
-        <Form controlId="addUser" className="navbar-form input-group">
+        <p>
+          тут має бути ще хрестик відміни спливаючого вікна. пізніше дороблю
+        </p>
+        <Form
+          controlId="addUser"
+          className="navbar-form input-group"
+          onSubmit={this.handleAdd}
+        >
           <label htmlFor="name">
             Name
-            <input type="text" id="name" className="marginInForm" />
+            <input
+              type="text"
+              className="marginInForm"
+              onChange={this.handleAddName}
+              defaultValue={this.state.name}
+            />
           </label>
 
           <label htmlFor="email">
             Email
-            <input type="email" id="email" className="marginInForm" />
+            <input
+              type="email"
+              className="marginInForm"
+              onChange={this.handleAddEmail}
+              defaultValue={this.state.email}
+            />
           </label>
           <span />
-          <button
-            type="submit"
-            onClick={this.handleAdd.bind(this)}
-            className="btn btn-primery btn-success"
-          >
-            ADD
-          </button>
+          <button className="btn btn-primery btn-success">ADD</button>
         </Form>
       </div>
     );

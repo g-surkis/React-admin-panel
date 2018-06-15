@@ -4,20 +4,17 @@ import { Table } from 'react-bootstrap';
 import RowTable from './RowTable';
 
 class TableUsers extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     //  console.log(this.props);
     return (
       // таке використання bootstrap допустиме?
       <Table id="users" striped bordered condensed hover>
-        <thead>
+        <thead className="head">
           <tr>
-            <th className="head">Id</th>
-            <th className="head">Name</th>
-            <th className="head">Email</th>
-            <th className="head">Actions</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -28,7 +25,7 @@ class TableUsers extends Component {
                 id={item.id}
                 name={item.name}
                 email={item.email}
-                key={i}
+                key={item.id}
               />
             );
           })}

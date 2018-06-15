@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Button } from 'react-bootstrap';
-import Edit from './Edit';
-import { deleteFetch } from '../services/users';
+import EditUser from './EditUser';
+import { deleteUser } from '../services/users';
 
 class RowTable extends Component {
   constructor(props) {
@@ -16,14 +16,16 @@ class RowTable extends Component {
   renderEdit(event) {
     const id = event.target.id;
     ReactDOM.render(
-      <Edit name={this.props.name} email={this.props.email} id={id} />,
+      <EditUser name={this.props.name} email={this.props.email} userId={id} />,
       document.getElementById('root')
     );
   }
 
   hendleDelete(event) {
+    //туттакож потрібна твоя рекомендація по обновленні даних після видалення
+    //тутможна щось використати з методів життєвого циклу компонентів React?
     const id = event.target.id;
-    deleteFetch(id);
+    deleteUser(id);
   }
 
   render() {
