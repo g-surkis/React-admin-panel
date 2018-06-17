@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { updateUser } from '../services/users';
-import { showAlert } from '../services/users';
 import { Alert, Button } from 'react-bootstrap';
 
 class EditUser extends Component {
@@ -11,14 +11,16 @@ class EditUser extends Component {
     this.state = {
       name: this.props.name,
       email: this.props.email,
-      show: true
+      showAlert: false,
+      success: true
     };
 
     this.handleEdit = this.handleEdit.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    // this.showAlert = this.showAlert.bind(this);
     this.handleDismiss = this.handleDismiss.bind(this);
+    this.successEdit = this.successEdit.bind(this);
+    this.fallEdit = this.fallEdit.bind(this);
   }
 
   handleChangeName(event) {
@@ -30,7 +32,28 @@ class EditUser extends Component {
   }
 
   handleDismiss() {
-    this.setState({ show: false });
+    this.setState({ showAlert: false });
+    this.props.hideEditWindow(false);
+  }
+
+  successEdit() {
+    return (
+      <Alert bsStyle="success">
+        <strong>Congratulations!</strong> You jast have corrected user data!.
+        <span> </span>
+        <Button onClick={this.handleDismiss}>Hide Alert</Button>
+      </Alert>
+    );
+  }
+
+  fallEdit() {
+    return (
+      <Alert bsStyle="danger">
+        <strong>Oops!</strong> Something gets wrong(. Try again.
+        <span> </span>
+        <Button onClick={this.handleDismiss}>Hide Alert</Button>
+      </Alert>
+    );
   }
 
   handleEdit(event) {
@@ -44,53 +67,65 @@ class EditUser extends Component {
       email
     };
 
-    let result = updateUser(id, userData);
-    console.log(result);
-    result
+    //цей контекст)
+    var status = this;
+
+    updateUser(id, userData)
       .then(function(res) {
-        this.setState({ show: true });
-        showAlert('User was updated!');
+        status.setState({ showAlert: true });
       })
       .catch(function(res) {
-        showAlert('faul');
+        status.setState({ showAlert: true });
+        status.setState({ success: false });
       });
   }
 
   render() {
-    console.log(this.state);
-    return (
-      <div className="appearWindow">
-        <h1 className="brand">Редагування даних користувача</h1>
-        <form onSubmit={this.handleEdit} className="navbar-form input-group">
-          <label htmlFor="name">
-            Name
-            <input
-              type="text"
-              onChange={this.handleChangeName}
-              defaultValue={this.state.name}
-            />
-          </label>
+    if (this.state.showAlert && this.state.success) {
+      return this.successEdit();
+    } else if (this.state.showAlert && this.state.showAlert === false) {
+      return this.fallEdit();
+    } else if (this.state.showAlert === false) {
+      return (
+        <div className="appearWindow">
+          <h1 className="brand">Редагування даних користувача</h1>
+          <form onSubmit={this.handleEdit} className="navbar-form input-group">
+            <label htmlFor="name">
+              Name
+              <input
+                type="text"
+                onChange={this.handleChangeName}
+                defaultValue={this.state.name}
+              />
+            </label>
 
-          <label htmlFor="email">
-            Email
-            <input
-              type="email"
-              id="email"
-              onChange={this.handleChangeEmail}
-              defaultValue={this.state.email}
-            />
-          </label>
-          <span />
-          <button
-            onClick={this.handleEdit}
-            className="btn btn-primery btn-success"
-          >
-            Edit
-          </button>
-        </form>
-      </div>
-    );
+            <label htmlFor="email">
+              Email
+              <input
+                type="email"
+                id="email"
+                onChange={this.handleChangeEmail}
+                defaultValue={this.state.email}
+              />
+            </label>
+            <span />
+            <button
+              onClick={this.handleEdit}
+              className="btn btn-primery btn-success"
+            >
+              Edit
+            </button>
+          </form>
+        </div>
+      );
+    }
   }
 }
 
 export default EditUser;
+
+EditUser.propTypes = {
+  userId: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string
+};

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 //import "bootstrap/dist/css/bootstrap.css";
 import { Form } from 'react-bootstrap';
-import { addUser } from '../services/users';
+import { addUser, showAlert } from '../services/users';
 
 class AddUser extends Component {
   constructor(props) {
@@ -10,13 +10,14 @@ class AddUser extends Component {
 
     this.state = {
       name: 'name',
-      email: 'email@domen.com'
+      email: 'name@domen.com',
+      showAlert: false
     };
 
     this.handleAdd = this.handleAdd.bind(this);
-
     this.handleAddName = this.handleAddName.bind(this);
     this.handleAddEmail = this.handleAddEmail.bind(this);
+    this.dismiss = this.dismiss.bind(this);
   }
 
   handleAddName(event) {
@@ -25,7 +26,6 @@ class AddUser extends Component {
 
   handleAddEmail(event) {
     this.setState({ email: event.target.value });
-    console.log(event.target.value);
   }
 
   handleAdd(event) {
@@ -37,17 +37,27 @@ class AddUser extends Component {
       email
     };
 
-    addUser(userData);
-  }
-  //також після добавлення нового користувача, він не появляється в таблиці без перезагрузки іне зникає
-  //діалогове вікно. підкажи що тут зробити
+    var status = this;
 
+    addUser(userData)
+      .then(function(res) {
+        status.setState({ showAlert: true });
+      })
+      .catch(function(res) {});
+  }
+
+  dismiss() {
+    this.setState({ showAlert: false });
+    this.props.hideWindow(false);
+  }
+  //не обновляє дані при додаванні
   render() {
+    console.log(this.props.arr);
+    if (this.state.showAlert) {
+      return showAlert('User was regstered', 'info', this.dismiss);
+    }
     return (
       <div className="appearWindow">
-        <p>
-          тут має бути ще хрестик відміни спливаючого вікна. пізніше дороблю
-        </p>
         <Form
           controlId="addUser"
           className="navbar-form input-group"

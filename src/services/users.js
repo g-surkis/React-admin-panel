@@ -11,65 +11,37 @@ export function updateUser(id, userData) {
     method: 'PATCH',
     body: JSON.stringify(userData)
   });
-  // .then(function(res) {
-  //   alertMessage(res, 'User data deleted succefully!');
-  // })
-  // .catch(function(res) {
-  //   alertMessage(res);
-  // });
 }
 
 export function addUser(userData) {
-  fetch(host, {
+  return fetch(host, {
     headers: {
       Accept: 'application/json',
       'Content-type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify(userData)
-  })
-    .then(function(res) {
-      alertMessage(res, 'User was created!');
-    })
-    .catch(function(res) {
-      alertMessage(res);
-    });
+  });
 }
 
 export function deleteUser(id) {
-  fetch(host + id, {
+  return fetch(host + id, {
     headers: {
       Accept: 'application/json',
       'Content-type': 'application/json'
     },
     method: 'DELETE'
-  })
-    .then(function(res) {
-      alertMessage(res, 'User data deleted succefully!');
-    })
-    .catch(function(res) {
-      alertMessage(res);
-    });
+  });
 }
 
-function alertMessage(res, text) {
-  if (res.status === 200) {
-    alert(text);
-  } else {
-    alert(res.statusText);
-  }
-}
-
-export function showAlert(message) {
-  // if (this.state.show) {
+export function showAlert(message, bsStyle, dismiss) {
   return (
-    <Alert bsStyle="danger" onDismiss={console.log('d')}>
-      <h4>Oh snap! You got an error!</h4>
+    <Alert bsStyle={bsStyle} onDismiss={dismiss}>
+      <h4>Success</h4>
       <p>{message}</p>
       <p>
-        <Button bsStyle="danger">Take this action</Button>
-        <span> or </span>
-        <Button onClick={console.log('d')}>Hide Alert</Button>
+        <span> </span>
+        <Button onClick={dismiss}>Hide Alert</Button>
       </p>
     </Alert>
   );
