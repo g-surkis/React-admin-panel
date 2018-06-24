@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { NavLink, Link } from 'react-router-dom';
 
 import { Button, Modal, Alert } from 'react-bootstrap';
 import EditUser from './EditUser';
 import { deleteUser } from '../services/users';
-import ViewInfoUser from './ViewInfoUser';
 
 class RowTable extends Component {
   constructor(props) {
@@ -96,7 +96,9 @@ class RowTable extends Component {
         </div>
 
         <tr>
-          <td onClick={this.props.showUser}>{this.props.id}</td>
+          <td>
+            <NavLink to={`/users/${this.props.id}`}>{this.props.id}</NavLink>
+          </td>
           <td>{this.props.name}</td>
           <td>{this.props.email}</td>
           <td>
@@ -128,7 +130,7 @@ class RowTable extends Component {
     {
       if (this.state.chekingDelete) {
         return this.deleteModalWindow();
-        //тут чомусь при виводі модального вікна міняються стилі таблиці
+        //при вивводі міняються стилі
       } else if (this.state.edit) {
         return (
           <EditUser
@@ -141,12 +143,8 @@ class RowTable extends Component {
       } else {
         return (
           <tr>
-            <td
-              onClick={() => {
-                this.props.showUser(true, <ViewInfoUser data={this.props} />);
-              }}
-            >
-              {this.props.id}
+            <td>
+              <Link to={`/users/${this.props.id}`}>{this.props.id}</Link>
             </td>
             <td>{this.props.name}</td>
             <td>{this.props.email}</td>

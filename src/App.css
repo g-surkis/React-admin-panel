@@ -37,21 +37,32 @@
 
 .appearWindow {
   position: absolute;
+  top: 50px;
   vertical-align: center;
-  padding: 10%;
-  margin-left: 5%;
-  margin-top: 5%;
-  height: 300px;
-  width: 90%;
+  padding-left: 12%;
+  margin-left: 10%;
+  margin-top: 3%;
+  height: 200px;
+  width: 70%;
   z-index: 999;
-  background-color: antiquewhite;
-  opacity: 0.95;
+  background-color: honeydew;
+  opacity: 0.92;
 }
 
-.marginInForm {
+.form {
   margin: 10px;
 }
 
-.empty {
+.inputInternalIndent {
   margin-bottom: 25px;
+}
+
+.copyrigth {
+  position: absolute;
+  bottom: 15px;
+  left: 45%;
+}
+
+.selected {
+  color: red;
 }

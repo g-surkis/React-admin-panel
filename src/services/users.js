@@ -34,15 +34,6 @@ export function deleteUser(id) {
   });
 }
 
-export function showAlert(message, bsStyle, dismiss) {
-  return (
-    <Alert bsStyle={bsStyle} onDismiss={dismiss}>
-      <h4>Success</h4>
-      <p>{message}</p>
-      <p>
-        <span> </span>
-        <Button onClick={dismiss}>Hide Alert</Button>
-      </p>
-    </Alert>
-  );
+export function showUser(id) {
+  return fetch(host + id);
 }

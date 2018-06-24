@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import AddUser from './AddUser';
 import TableUsers from './TableUsers';
+import { loadData } from '../services/users';
 
 class Users extends Component {
   constructor(props) {
@@ -15,9 +16,12 @@ class Users extends Component {
 
     this.addUser = this.addUser.bind(this);
     this.loadData = this.loadData.bind(this);
-    this.renderTableWithWindow = this.renderTableWithWindow.bind(this);
+    this.renderTableAsBackgroundToModalWindow = this.renderTableAsBackgroundToModalWindow.bind(
+      this
+    );
     this.renderSimpleTable = this.renderSimpleTable.bind(this);
     this.hideWindowAddUser = this.hideWindowAddUser.bind(this);
+    this.refreshTable = this.refreshTable.bind(this);
   }
 
   addUser(value) {
@@ -28,7 +32,7 @@ class Users extends Component {
     this.setState({ addUser: value });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadData();
   }
 
@@ -41,20 +45,24 @@ class Users extends Component {
   renderSimpleTable() {
     return (
       <div className="container">
-        <div className="emptySpace" />
+        <div className="inputInternalIndent" />
         <button onClick={this.addUser} className="btn btn-success">
           Add user!
         </button>
-        <div className="emptySpace" />
+        <div className="inputInternalIndent" />
         <TableUsers arr={this.state.arr} />
       </div>
     );
   }
-  renderTableWithWindow() {
+  renderTableAsBackgroundToModalWindow() {
+    //незнаю як скоротити
     return (
       <div>
         <div>
-          <AddUser hideWindow={this.hideWindowAddUser} />
+          <AddUser
+            hideWindow={this.hideWindowAddUser}
+            refreshTable={this.refreshTable}
+          />
         </div>
 
         <div className="container">
@@ -64,13 +72,18 @@ class Users extends Component {
     );
   }
 
+  refreshTable(value) {
+    let arr = this.state.arr;
+    let newArr = [...arr, value];
+    this.setState({ arr: newArr });
+  }
+
   render() {
     if (this.state.addUser) {
-      return this.renderTableWithWindow();
+      return this.renderTableAsBackgroundToModalWindow();
     } else {
       return this.renderSimpleTable();
     }
   }
 }
-
 export default Users;

@@ -1,18 +1,16 @@
-// import React from 'react';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
-// import registerServiceWorker from './registerServiceWorker';
 
 import {
   BrowserRouter,
   Router,
   Route,
   hashHistory,
-  Link
+  NavLink
 } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 
+import Home from './Home';
 import Users from './Users';
 import EditUser from './EditUser';
 import ViewInfoUser from './ViewInfoUser';
@@ -20,24 +18,31 @@ import ViewInfoUser from './ViewInfoUser';
 const history = createBrowserHistory();
 
 export default class Navigation extends Component {
-  //навіть не уявляю для чого тут роутер
   render() {
     return (
-      <BrowserRouter history={history}>
+      <Router history={history}>
         <div>
-          {/* <li><Link to="/">Home</Link></li>
-            <li><Link to="/about"></Link></li>
-            <li><Link to="/Info"></Link></li>
-             */}
+          <ul>
+            <li>
+              <NavLink to="/" activeclassname="selected">
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/users" activeclassname="selected">
+                Users
+              </NavLink>
+            </li>
+          </ul>
 
-          <Route path="/" component={Users} />
-          <Route path="/edit" component={EditUser} />
-          {/* <Route path="/showUser/{}" component={ViewInfoUser}/> // тут можна id додати в адресу?  */}
+          <hr />
 
-          {/* <Route path="/" component={}/>
-            <Route path="/" component={}/> */}
+          <Route exact path="/" component={Home} />
+          <Route exact path="/users" component={Users} />
+          {/*цей NavLink не враховує мабуть exact  */}
+          <Route path="/users/:userId" component={ViewInfoUser} />
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { updateUser } from '../services/users';
 import { Alert, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 class EditUser extends Component {
   constructor(props) {
@@ -67,29 +68,52 @@ class EditUser extends Component {
       email
     };
 
-    //цей контекст)
-    var status = this;
-
     updateUser(id, userData)
-      .then(function(res) {
-        status.setState({ showAlert: true });
+      .then(res => {
+        this.setState({ showAlert: true });
       })
-      .catch(function(res) {
-        status.setState({ showAlert: true });
-        status.setState({ success: false });
+      .catch(res => {
+        this.setState({ showAlert: true, success: false });
       });
   }
 
   render() {
     if (this.state.showAlert && this.state.success) {
       return this.successEdit();
-    } else if (this.state.showAlert && this.state.showAlert === false) {
+    } else if (
+      this.state.showAlert === true &&
+      this.state.showAlert === false
+    ) {
       return this.fallEdit();
     } else if (this.state.showAlert === false) {
       return (
         <div className="appearWindow">
           <h1 className="brand">Редагування даних користувача</h1>
-          <form onSubmit={this.handleEdit} className="navbar-form input-group">
+          <Form className="navbar-form input-group" onSubmit={this.handleEdit}>
+            <label htmlFor="name">
+              Name
+              <input
+                type="text"
+                className="form"
+                onChange={this.handleChangeName}
+                defaultValue={this.state.name}
+              />
+            </label>
+
+            <label htmlFor="email">
+              Email
+              <input
+                type="email"
+                className="form"
+                onChange={this.handleChangeEmail}
+                defaultValue={this.state.email}
+              />
+            </label>
+            <span />
+            <button className="btn btn-primery btn-success">Edit</button>
+          </Form>
+
+          {/* <form onSubmit={this.handleEdit} className="navbar-form input-group">
             <label htmlFor="name">
               Name
               <input
@@ -103,7 +127,6 @@ class EditUser extends Component {
               Email
               <input
                 type="email"
-                id="email"
                 onChange={this.handleChangeEmail}
                 defaultValue={this.state.email}
               />
@@ -115,7 +138,7 @@ class EditUser extends Component {
             >
               Edit
             </button>
-          </form>
+          </form> */}
         </div>
       );
     }

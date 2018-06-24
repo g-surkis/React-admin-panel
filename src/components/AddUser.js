@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 //import "bootstrap/dist/css/bootstrap.css";
 import { Form } from 'react-bootstrap';
-import { addUser, showAlert } from '../services/users';
+import { addUser } from '../services/users';
+import { showAlert } from './shared/users';
 
 class AddUser extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      name: 'name',
-      email: 'name@domen.com',
+      name: '',
+      email: '',
       showAlert: false
     };
 
@@ -28,6 +30,11 @@ class AddUser extends Component {
     this.setState({ email: event.target.value });
   }
 
+  dismiss() {
+    this.setState({ showAlert: false });
+    this.props.hideWindow(false);
+  }
+
   handleAdd(event) {
     event.preventDefault();
     let name = this.state.name;
@@ -37,37 +44,36 @@ class AddUser extends Component {
       email
     };
 
-    var status = this;
+    let idNewUser;
 
     addUser(userData)
-      .then(function(res) {
-        status.setState({ showAlert: true });
+      .then(res => {
+        res.json().then(res => {
+          idNewUser = res.id;
+          this.props.refreshTable({ name: name, email: email, id: idNewUser });
+        });
+        this.setState({ showAlert: true });
       })
-      .catch(function(res) {});
+      .catch(res => {
+        showAlert('Somethisng was wrong', 'danger', this.dismiss);
+      });
+    // console.log(this.props);
+    // this.props.refreshTable({name: name, email: email, id: idNewUser})
   }
 
-  dismiss() {
-    this.setState({ showAlert: false });
-    this.props.hideWindow(false);
-  }
-  //не обновляє дані при додаванні
   render() {
-    console.log(this.props.arr);
     if (this.state.showAlert) {
       return showAlert('User was regstered', 'info', this.dismiss);
     }
     return (
       <div className="appearWindow">
-        <Form
-          controlId="addUser"
-          className="navbar-form input-group"
-          onSubmit={this.handleAdd}
-        >
+        <h2>Adding user</h2>
+        <Form className="navbar-form input-group" onSubmit={this.handleAdd}>
           <label htmlFor="name">
             Name
             <input
               type="text"
-              className="marginInForm"
+              className="form"
               onChange={this.handleAddName}
               defaultValue={this.state.name}
             />
@@ -77,7 +83,7 @@ class AddUser extends Component {
             Email
             <input
               type="email"
-              className="marginInForm"
+              className="form"
               onChange={this.handleAddEmail}
               defaultValue={this.state.email}
             />
@@ -91,3 +97,7 @@ class AddUser extends Component {
 }
 
 export default AddUser;
+
+AddUser.propTypes = {
+  refreshTable: PropTypes.func
+};
