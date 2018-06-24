@@ -3,7 +3,7 @@ import { Alert, Button } from 'react-bootstrap';
 
 export function showAlert(message, bsStyle, dismiss) {
   return (
-    <Alert bsStyle={bsStyle} onDismiss={dismiss}>
+    <Alert bsStyle={bsStyle} onDismiss={dismiss} className="alert">
       <h4>Success</h4>
       <p>{message}</p>
       <p>
