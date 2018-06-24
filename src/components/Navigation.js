@@ -12,7 +12,6 @@ import createBrowserHistory from 'history/createBrowserHistory';
 
 import Home from './Home';
 import Users from './Users';
-import EditUser from './EditUser';
 import ViewInfoUser from './ViewInfoUser';
 
 const history = createBrowserHistory();

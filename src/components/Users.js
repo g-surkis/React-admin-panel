@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import AddUser from './AddUser';
+import AddEditUser from './AddEditUser';
 import TableUsers from './TableUsers';
 import { loadData } from '../services/users';
 
@@ -59,7 +59,8 @@ class Users extends Component {
     return (
       <div>
         <div>
-          <AddUser
+          <AddEditUser
+            kindOfAction={'add'}
             hideWindow={this.hideWindowAddUser}
             refreshTable={this.refreshTable}
           />

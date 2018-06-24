@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { NavLink, Link } from 'react-router-dom';
 
 import { Button, Modal, Alert } from 'react-bootstrap';
-import EditUser from './EditUser';
+import AddEditUser from './AddEditUser';
 import { deleteUser } from '../services/users';
 
 class RowTable extends Component {
@@ -31,14 +31,15 @@ class RowTable extends Component {
   }
 
   renderEdit(event) {
-    this.setState({ idWillEdit: event.target.id });
-    this.setState({ edit: true });
+    this.setState({ idWillEdit: event.target.id, edit: true });
   }
 
   hendleDelete(event) {
-    this.setState({ idWillDelete: event.target.id });
-    this.setState({ nameWillDelete: event.target.username });
-    this.setState({ chekingDelete: true });
+    this.setState({
+      idWillDelete: event.target.id,
+      nameWillDelete: event.target.username,
+      chekingDelete: true
+    });
   }
 
   acceptDelete() {
@@ -130,14 +131,14 @@ class RowTable extends Component {
     {
       if (this.state.chekingDelete) {
         return this.deleteModalWindow();
-        //при вивводі міняються стилі
       } else if (this.state.edit) {
         return (
-          <EditUser
+          <AddEditUser
+            kindOfAction={'edit'}
             name={this.props.name}
             email={this.props.email}
             userId={this.state.idWillEdit}
-            hideEditWindow={this.hideEditWindow}
+            hideWindow={this.hideEditWindow}
           />
         );
       } else {
