@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 //import "bootstrap/dist/css/bootstrap.css";
 import { Form } from 'react-bootstrap';
 import { addUser } from '../services/users';
-import { showAlert } from './shared/users';
+import { showAlert } from './shared/alert';
 
 class AddUser extends Component {
   constructor(props) {
@@ -46,19 +46,18 @@ class AddUser extends Component {
 
     let idNewUser;
 
-    addUser(userData)
+    addUser(userData) //переміщення не працює
       .then(res => {
         res.json().then(res => {
           idNewUser = res.id;
           this.props.refreshTable({ name: name, email: email, id: idNewUser });
+          this.setState({ showAlert: true }); //перемістив сюди цей рядок коду, і забра один ворнінг
+          // про запис стейту в демонтований компонент
         });
-        this.setState({ showAlert: true });
       })
       .catch(res => {
         showAlert('Somethisng was wrong', 'danger', this.dismiss);
       });
-    // console.log(this.props);
-    // this.props.refreshTable({name: name, email: email, id: idNewUser})
   }
 
   render() {
@@ -99,5 +98,6 @@ class AddUser extends Component {
 export default AddUser;
 
 AddUser.propTypes = {
-  refreshTable: PropTypes.func
+  refreshTable: PropTypes.func,
+  hideWindow: PropTypes.func
 };

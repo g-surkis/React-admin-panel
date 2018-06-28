@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from "react-dom";
 import PropTypes from 'prop-types';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { Button, Modal, Alert } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import EditUser from './EditUser';
 import { deleteUser } from '../services/users';
+import { showAlert } from './shared/alert';
 
 class RowTable extends Component {
   constructor(props) {
@@ -14,14 +15,14 @@ class RowTable extends Component {
     this.state = {
       chekingDelete: false,
       showAlert: false,
-      idWillDelete: 1000,
-      idWillEdit: 1000,
+      idDelete: 1000,
+      idEdit: 1000,
       showUser: false,
       edit: false
     };
 
-    this.renderEdit = this.renderEdit.bind(this);
-    this.hendleDelete = this.hendleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.acceptDelete = this.acceptDelete.bind(this);
     this.cancelDelete = this.cancelDelete.bind(this);
     this.successDelete = this.successDelete.bind(this);
@@ -30,35 +31,30 @@ class RowTable extends Component {
     this.hideEditWindow = this.hideEditWindow.bind(this);
   }
 
-  renderEdit(event) {
-    this.setState({ idWillEdit: event.target.id });
-    this.setState({ edit: true });
+  handleEdit(event) {
+    this.setState({ idEdit: event.target.id, edit: true });
   }
 
-  hendleDelete(event) {
-    this.setState({ idWillDelete: event.target.id });
-    this.setState({ nameWillDelete: event.target.username });
-    this.setState({ chekingDelete: true });
+  handleDelete(event) {
+    this.setState({
+      idDelete: event.target.id,
+      nameWillDelete: event.target.username,
+      chekingDelete: true
+    });
   }
 
   acceptDelete() {
-    var status = this;
-    deleteUser(this.state.idWillDelete)
-      .then(function(res) {
-        status.setState({ showAlert: true });
+    deleteUser(this.state.idDelete)
+      .then(res => {
+        this.successDelete();
       })
       .catch(function(res) {});
     this.setState({ chekingDelete: false });
   }
 
   successDelete() {
-    return (
-      <Alert bsStyle="success">
-        <strong>Congratulations!</strong> You jast have corrected user data!.
-        <span> </span>
-        <Button onClick={this.handleDismiss}>Hide Alert</Button>
-      </Alert>
-    );
+    this.props.refreshTableAfterDelete(+this.state.idDelete);
+    showAlert('User was deleted', 'info', this.handleDismiss);
   }
 
   handleDismiss() {
@@ -75,29 +71,43 @@ class RowTable extends Component {
 
   deleteModalWindow() {
     return (
-      <div>
-        <div className="static-modal">
-          <Modal.Dialog>
-            <Modal.Header>
-              <Modal.Title>Delete User?</Modal.Title>
-            </Modal.Header>
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Delete User?</Modal.Title>
+        </Modal.Header>
 
-            <Modal.Body>Warning! Removal is irreversible </Modal.Body>
+        <Modal.Body>Warning! Removal is irreversible </Modal.Body>
 
-            <Modal.Footer>
-              <Button bsStyle="danger" onClick={this.acceptDelete}>
-                Delete
-              </Button>
-              <Button bsStyle="info" onClick={this.cancelDelete}>
-                Cencel
-              </Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </div>
+        <Modal.Footer>
+          <Button bsStyle="danger" onClick={this.acceptDelete}>
+            Delete
+          </Button>
+          <Button bsStyle="info" onClick={this.cancelDelete}>
+            Cencel
+          </Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    );
+  }
 
+  render() {
+    if (this.state.chekingDelete) {
+      return this.deleteModalWindow();
+    } else if (this.state.edit) {
+      return (
+        <EditUser
+          name={this.props.name}
+          email={this.props.email}
+          userId={this.state.idEdit}
+          hideEditWindow={this.hideEditWindow}
+          refreshTableAfterEdit={this.props.refreshTableAfterEdit}
+        />
+      );
+    } else {
+      return (
         <tr>
           <td>
-            <NavLink to={`/users/${this.props.id}`}>{this.props.id}</NavLink>
+            <Link to={`/user/${this.props.id}`}>{this.props.id}</Link>
           </td>
           <td>{this.props.name}</td>
           <td>{this.props.email}</td>
@@ -106,7 +116,7 @@ class RowTable extends Component {
               bsStyle="primary"
               bsSize="xsmall"
               id={this.props.id}
-              onClick={this.renderEdit}
+              onClick={this.handleEdit}
             >
               Edit
             </Button>
@@ -116,61 +126,13 @@ class RowTable extends Component {
               bsStyle="warning"
               bsSize="xsmall"
               id={this.props.id}
-              onClick={this.hendleDelete}
+              onClick={this.handleDelete}
             >
               Delete
             </Button>
           </td>
         </tr>
-      </div>
-    );
-  }
-
-  render() {
-    {
-      if (this.state.chekingDelete) {
-        return this.deleteModalWindow();
-        //при вивводі міняються стилі
-      } else if (this.state.edit) {
-        return (
-          <EditUser
-            name={this.props.name}
-            email={this.props.email}
-            userId={this.state.idWillEdit}
-            hideEditWindow={this.hideEditWindow}
-          />
-        );
-      } else {
-        return (
-          <tr>
-            <td>
-              <Link to={`/users/${this.props.id}`}>{this.props.id}</Link>
-            </td>
-            <td>{this.props.name}</td>
-            <td>{this.props.email}</td>
-            <td>
-              <Button
-                bsStyle="primary"
-                bsSize="xsmall"
-                id={this.props.id}
-                onClick={this.renderEdit}
-              >
-                Edit
-              </Button>
-              <span> </span>
-
-              <Button
-                bsStyle="warning"
-                bsSize="xsmall"
-                id={this.props.id}
-                onClick={this.hendleDelete}
-              >
-                Delete
-              </Button>
-            </td>
-          </tr>
-        );
-      }
+      );
     }
   }
 }
@@ -180,5 +142,6 @@ export default RowTable;
 RowTable.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
-  email: PropTypes.string
+  email: PropTypes.string,
+  refreshTableAfterEdit: PropTypes.func
 };

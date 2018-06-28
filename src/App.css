@@ -36,7 +36,7 @@
 }
 
 .appearWindow {
-  position: absolute;
+  position: fixed;
   top: 50px;
   vertical-align: center;
   padding-left: 12%;
@@ -65,4 +65,12 @@
 
 .selected {
   color: red;
+}
+
+.img_close {
+  float: right;
+}
+
+.delete {
+  position: absolute;
 }

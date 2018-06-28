@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-import { Well, PageHeader } from 'react-bootstrap';
+import { Well, PageHeader, Panel } from 'react-bootstrap';
 import { showUser } from '../services/users';
 
-export default class ViewInfoUser extends Component {
+export default class User extends Component {
   constructor(props) {
     super(props);
 
@@ -24,9 +24,7 @@ export default class ViewInfoUser extends Component {
   render() {
     return (
       <div>
-        <PageHeader>
-          {this.state.obj.name} <small>Info</small>
-        </PageHeader>
+        <PageHeader>{this.state.obj.name}</PageHeader>
         <Well bsSize="small">ID: {this.state.obj.id}</Well>
         <Well bsSize="small">E-mail: {this.state.obj.email}</Well>
       </div>

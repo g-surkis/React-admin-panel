@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 
-import {
-  BrowserRouter,
-  Router,
-  Route,
-  hashHistory,
-  NavLink
-} from 'react-router-dom';
+import { Router, Route, NavLink } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
+import { Panel } from 'react-bootstrap';
 
-import Home from './Home';
-import Users from './Users';
-import EditUser from './EditUser';
-import ViewInfoUser from './ViewInfoUser';
+import Home from '../pages/Home';
+import Users from '../pages/Users';
+import User from '../pages/User';
 
 const history = createBrowserHistory();
 
@@ -22,6 +15,9 @@ export default class Navigation extends Component {
     return (
       <Router history={history}>
         <div>
+          <Panel bsStyle="primary">
+            <Panel.Title>Admin Panel</Panel.Title>
+          </Panel>
           <ul>
             <li>
               <NavLink to="/" activeclassname="selected">
@@ -39,8 +35,7 @@ export default class Navigation extends Component {
 
           <Route exact path="/" component={Home} />
           <Route exact path="/users" component={Users} />
-          {/*цей NavLink не враховує мабуть exact  */}
-          <Route path="/users/:userId" component={ViewInfoUser} />
+          <Route path="/user/:userId" component={User} />
         </div>
       </Router>
     );

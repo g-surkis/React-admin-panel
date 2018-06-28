@@ -6,11 +6,8 @@ import RowTable from './RowTable';
 
 class TableUsers extends Component {
   constructor(props) {
+    // якщо це видалити, то обновлення таблиці не працює
     super(props);
-
-    this.state = {
-      dataUser: {}
-    };
   }
 
   render() {
@@ -25,7 +22,7 @@ class TableUsers extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.arr.map((item, i) => {
+          {this.props.users.map((item, i) => {
             return (
               <RowTable
                 id={item.id}
@@ -33,6 +30,8 @@ class TableUsers extends Component {
                 email={item.email}
                 key={item.id}
                 showUser={this.showUser}
+                refreshTableAfterEdit={this.props.refreshTableAfterEdit}
+                refreshTableAfterDelete={this.props.refreshTableAfterDelete}
               />
             );
           })}
@@ -44,5 +43,5 @@ class TableUsers extends Component {
 export default TableUsers;
 
 TableUsers.propTypes = {
-  arr: PropTypes.array
+  users: PropTypes.array
 };

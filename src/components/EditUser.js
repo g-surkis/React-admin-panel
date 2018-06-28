@@ -5,6 +5,8 @@ import { updateUser } from '../services/users';
 import { Alert, Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 
+import { showAlert } from './shared/alert';
+
 class EditUser extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +41,7 @@ class EditUser extends Component {
 
   successEdit() {
     return (
-      <Alert bsStyle="success">
+      <Alert bsStyle="success" className="">
         <strong>Congratulations!</strong> You jast have corrected user data!.
         <span> </span>
         <Button onClick={this.handleDismiss}>Hide Alert</Button>
@@ -60,7 +62,7 @@ class EditUser extends Component {
   handleEdit(event) {
     event.preventDefault();
 
-    let id = this.props.userId;
+    let id = +this.props.userId;
     let name = this.state.name;
     let email = this.state.email;
     let userData = {
@@ -71,24 +73,25 @@ class EditUser extends Component {
     updateUser(id, userData)
       .then(res => {
         this.setState({ showAlert: true });
+        this.props.refreshTableAfterEdit({ id, name, email });
       })
-      .catch(res => {
-        this.setState({ showAlert: true, success: false });
-      });
+      .catch(res => {});
   }
 
   render() {
-    if (this.state.showAlert && this.state.success) {
-      return this.successEdit();
-    } else if (
-      this.state.showAlert === true &&
-      this.state.showAlert === false
-    ) {
-      return this.fallEdit();
-    } else if (this.state.showAlert === false) {
+    if (this.state.showAlert === true) {
+      //підкажи як вивести цей алерт поза табличкою. бо мучився і не міг. Модал зробив
+      //але все ж таки про алерт цікаво
+      return showAlert(
+        'Congratulations! You jast have corrected user data!.',
+        'info',
+        this.handleDismiss
+      );
+    }
+    if (this.state.showAlert === false) {
       return (
         <div className="appearWindow">
-          <h1 className="brand">Редагування даних користувача</h1>
+          <h1 className="brand">Editing user data</h1>
           <Form className="navbar-form input-group" onSubmit={this.handleEdit}>
             <label htmlFor="name">
               Name
@@ -112,33 +115,6 @@ class EditUser extends Component {
             <span />
             <button className="btn btn-primery btn-success">Edit</button>
           </Form>
-
-          {/* <form onSubmit={this.handleEdit} className="navbar-form input-group">
-            <label htmlFor="name">
-              Name
-              <input
-                type="text"
-                onChange={this.handleChangeName}
-                defaultValue={this.state.name}
-              />
-            </label>
-
-            <label htmlFor="email">
-              Email
-              <input
-                type="email"
-                onChange={this.handleChangeEmail}
-                defaultValue={this.state.email}
-              />
-            </label>
-            <span />
-            <button
-              onClick={this.handleEdit}
-              className="btn btn-primery btn-success"
-            >
-              Edit
-            </button>
-          </form> */}
         </div>
       );
     }

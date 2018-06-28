@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button } from 'react-bootstrap';
+// import { Alert, Button } from 'react-bootstrap';
 const host = 'http://localhost:3001/users/';
 
 export function updateUser(id, userData) {
@@ -22,6 +22,9 @@ export function addUser(userData) {
     method: 'POST',
     body: JSON.stringify(userData)
   });
+  // .then(res => {
+  //   res.json();
+  // })
 }
 
 export function deleteUser(id) {
@@ -36,4 +39,8 @@ export function deleteUser(id) {
 
 export function showUser(id) {
   return fetch(host + id);
+}
+
+export function loadUsers() {
+  return fetch('http://localhost:3001/users');
 }
