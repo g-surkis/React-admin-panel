@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Well, PageHeader, Panel } from 'react-bootstrap';
+import { Well, PageHeader } from 'react-bootstrap';
 import { showUser } from '../services/users';
 
 export default class User extends Component {
@@ -12,10 +12,7 @@ export default class User extends Component {
     };
   }
   componentDidMount() {
-    showUser(this.props.match.params.userId)
-      .then(res => {
-        return res.json();
-      })
+    showUser(this.props.match.params.userId) //propTypes не задаютьсяв цьому випадку?
       .then(res => {
         this.setState({ obj: res });
       });

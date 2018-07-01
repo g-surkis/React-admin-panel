@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { PageHeader } from 'react-bootstrap';
 
-import AddUser from '../components/AddUser';
+import AddEditUser from '../components/AddEditUser';
 import TableUsers from '../components/TableUsers';
 import { loadUsers } from '../services/users';
-// import { Alert, Button, Modal, Image } from "react-bootstrap";
+
+import { showAlert } from '../components/shared/alert';
+import { addUser } from '../services/users';
 
 class Users extends Component {
   constructor(props) {
@@ -14,15 +16,17 @@ class Users extends Component {
 
     this.state = {
       addUser: false,
-      arr: []
+      arr: [],
+      showAlert: false,
+      successAddUser: false
     };
 
     this.addUser = this.addUser.bind(this);
+    this.addUserFunc = this.addUserFunc.bind(this);
+
     this.loadData = this.loadData.bind(this);
-    // this.renderTableAsBackgroundToModalWindow = this.renderTableAsBackgroundToModalWindow.bind(
-    //   this
-    // );
-    // this.renderSimpleTable = this.renderSimpleTable.bind(this);
+    this.dismiss = this.dismiss.bind(this);
+
     this.hideWindowAddUser = this.hideWindowAddUser.bind(this);
     this.refreshTable = this.refreshTable.bind(this);
     this.refreshTableAfterEdit = this.refreshTableAfterEdit.bind(this);
@@ -42,10 +46,30 @@ class Users extends Component {
   }
 
   async loadData() {
-    const rawResponse = await loadUsers();
-    // const content = await  loadUsers().json(); //так не працює
-    const content = await rawResponse.json(); //перенос в сервіси цього рядка теж не працює
+    const content = await loadUsers(); //так не працює
     this.setState({ arr: content });
+  }
+
+  addUserFunc(userData) {
+    let idNewUser;
+    addUser(userData)
+      .then(res => {
+        idNewUser = res.id;
+        this.refreshTable({
+          name: userData.name,
+          email: userData.email,
+          id: +idNewUser
+        });
+        this.setState({ showAlert: true, successAddUser: true });
+        this.hideWindowAddUser(false);
+      })
+      .catch(res => {
+        this.setState({ showAlert: true, successAddUser: false });
+      });
+  }
+
+  dismiss() {
+    this.setState({ showAlert: false });
   }
 
   refreshTable(value) {
@@ -55,13 +79,13 @@ class Users extends Component {
   }
 
   refreshTableAfterEdit(value) {
-    let arr = this.state.arr;
-    arr.forEach((item, i) => {
+    let newArr = this.state.arr;
+    newArr.forEach((item, i) => {
       if (item.id === value.id) {
-        arr.splice(i, 1, value);
+        newArr.splice(i, 1, value);
       }
     });
-    this.setState({ arr: arr });
+    this.setState({ arr: newArr });
   }
 
   refreshTableAfterDelete(value) {
@@ -75,9 +99,9 @@ class Users extends Component {
   }
 
   render() {
-    let buttonAddUser;
+    let buttonAddUser, alert;
 
-    if (this.state.addUser == false) {
+    if (this.state.addUser === false) {
       buttonAddUser = (
         <button onClick={this.addUser} className="btn btn-success">
           Add user!
@@ -86,14 +110,26 @@ class Users extends Component {
     } else {
       buttonAddUser = (
         <div>
-          <AddUser
+          <AddEditUser
+            method={this.addUserFunc}
             hideWindow={this.hideWindowAddUser}
-            refreshTable={this.refreshTable}
+            textWindow={'Adding user'}
+            action={'Add'}
           />
         </div>
       );
     }
 
+    if (this.state.showAlert === true && this.state.successAddUser === true) {
+      alert = showAlert('User was registered', 'info', this.dismiss);
+    }
+    if (this.state.showAlert === true && this.state.successAddUser === false) {
+      alert = showAlert(
+        'User was not registered. Try again',
+        'warning',
+        this.dismiss
+      );
+    }
     return (
       <div className="container">
         <PageHeader>
@@ -101,13 +137,12 @@ class Users extends Component {
         </PageHeader>
         <div className="inputInternalIndent" />
         {buttonAddUser}
+        {alert}
         <div className="inputInternalIndent" />
         <TableUsers
           users={this.state.arr}
           refreshTableAfterEdit={this.refreshTableAfterEdit}
           refreshTableAfterDelete={this.refreshTableAfterDelete}
-          // я думав раніше що пропси доступні всім наслідникам , а виявляється іх треба передавати через
-          //проміжні чілдри в параметрах
         />
       </div>
     );
