@@ -48,12 +48,9 @@ class AddUser extends Component {
 
     addUser(userData) //переміщення не працює
       .then(res => {
-        res.json().then(res => {
-          idNewUser = res.id;
-          this.props.refreshTable({ name: name, email: email, id: idNewUser });
-          this.setState({ showAlert: true }); //перемістив сюди цей рядок коду, і забра один ворнінг
-          // про запис стейту в демонтований компонент
-        });
+        idNewUser = res.id;
+        this.props.refreshTable({ name: name, email: email, id: idNewUser });
+        this.setState({ showAlert: true });
       })
       .catch(res => {
         showAlert('Somethisng was wrong', 'danger', this.dismiss);

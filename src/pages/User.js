@@ -12,13 +12,9 @@ export default class User extends Component {
     };
   }
   componentDidMount() {
-    showUser(this.props.match.params.userId)
-      .then(res => {
-        return res.json();
-      })
-      .then(res => {
-        this.setState({ obj: res });
-      });
+    showUser(this.props.match.params.userId).then(res => {
+      this.setState({ obj: res });
+    });
   }
 
   render() {

@@ -21,10 +21,9 @@ export function addUser(userData) {
     },
     method: 'POST',
     body: JSON.stringify(userData)
+  }).then(res => {
+    return res.json();
   });
-  // .then(res => {
-  //   res.json();
-  // })
 }
 
 export function deleteUser(id) {
@@ -38,9 +37,13 @@ export function deleteUser(id) {
 }
 
 export function showUser(id) {
-  return fetch(host + id);
+  return fetch(host + id).then(res => {
+    return res.json();
+  });
 }
 
 export function loadUsers() {
-  return fetch('http://localhost:3001/users');
+  return fetch('http://localhost:3001/users').then(res => {
+    return res.json();
+  });
 }

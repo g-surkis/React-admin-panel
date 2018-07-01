@@ -22,8 +22,6 @@ class EditUser extends Component {
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleDismiss = this.handleDismiss.bind(this);
-    this.successEdit = this.successEdit.bind(this);
-    this.fallEdit = this.fallEdit.bind(this);
   }
 
   handleChangeName(event) {
@@ -35,28 +33,7 @@ class EditUser extends Component {
   }
 
   handleDismiss() {
-    this.setState({ showAlert: false });
     this.props.hideEditWindow(false);
-  }
-
-  successEdit() {
-    return (
-      <Alert bsStyle="success" className="">
-        <strong>Congratulations!</strong> You jast have corrected user data!.
-        <span> </span>
-        <Button onClick={this.handleDismiss}>Hide Alert</Button>
-      </Alert>
-    );
-  }
-
-  fallEdit() {
-    return (
-      <Alert bsStyle="danger">
-        <strong>Oops!</strong> Something gets wrong(. Try again.
-        <span> </span>
-        <Button onClick={this.handleDismiss}>Hide Alert</Button>
-      </Alert>
-    );
   }
 
   handleEdit(event) {
@@ -77,6 +54,24 @@ class EditUser extends Component {
       })
       .catch(res => {});
   }
+  //я незнаю як вирішити питання з цим ворнінгом. про нього описував в коментах на ГітХаб
+  //я думаю він появляється тому що в бутстрапі при побудові компонентів використовують div, а я бутстраповський алерт
+  // викликаю в середині td
+
+  // index.js:2178 Warning: validateDOMNesting(...): <div> cannot appear as a child of <tbody>.
+  //   in div (at EditUser.js:70)
+  //   in EditUser (at RowTable.js:98)
+  //   in RowTable (at TableUsers.js:27)
+  //   in tbody (at TableUsers.js:24)
+  //   in table (created by Table)
+  //   in Table (at TableUsers.js:15)
+  //   in TableUsers (at Users.js:103)
+  //   in div (at Users.js:96)
+  //   in Users (created by Route)
+  //   in Route (at Navigation.js:37)
+  //   in div (at Navigation.js:17)
+  //   in Router (at Navigation.js:16)
+  //   in Navigation (at index.js:10)
 
   render() {
     if (this.state.showAlert === true) {

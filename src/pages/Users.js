@@ -42,9 +42,7 @@ class Users extends Component {
   }
 
   async loadData() {
-    const rawResponse = await loadUsers();
-    // const content = await  loadUsers().json(); //так не працює
-    const content = await rawResponse.json(); //перенос в сервіси цього рядка теж не працює
+    const content = await loadUsers();
     this.setState({ arr: content });
   }
 
