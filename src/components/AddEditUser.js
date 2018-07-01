@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-//import "bootstrap/dist/css/bootstrap.css";
 import { Form } from 'react-bootstrap';
-import { addUser } from '../services/users';
 import { showAlert } from './shared/alert';
 
-class AddUser extends Component {
+class AddEditUser extends Component {
   constructor(props) {
     super(props);
 
@@ -16,7 +14,7 @@ class AddUser extends Component {
       showAlert: false
     };
 
-    this.handleAdd = this.handleAdd.bind(this);
+    this.handleForm = this.handleForm.bind(this);
     this.handleAddName = this.handleAddName.bind(this);
     this.handleAddEmail = this.handleAddEmail.bind(this);
     this.dismiss = this.dismiss.bind(this);
@@ -35,7 +33,7 @@ class AddUser extends Component {
     this.props.hideWindow(false);
   }
 
-  handleAdd(event) {
+  handleForm(event) {
     event.preventDefault();
     let name = this.state.name;
     let email = this.state.email;
@@ -44,30 +42,26 @@ class AddUser extends Component {
       email
     };
 
-    let idNewUser;
+    this.props.method(userData, this.props.userId);
+  }
 
-    addUser(userData) //переміщення не працює
-      .then(res => {
-        res.json().then(res => {
-          idNewUser = res.id;
-          this.props.refreshTable({ name: name, email: email, id: idNewUser });
-          this.setState({ showAlert: true }); //перемістив сюди цей рядок коду, і забра один ворнінг
-          // про запис стейту в демонтований компонент
-        });
-      })
-      .catch(res => {
-        showAlert('Somethisng was wrong', 'danger', this.dismiss);
-      });
+  //класний метод)
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return { name: nextProps.name, email: nextProps.email };
   }
 
   render() {
     if (this.state.showAlert) {
-      return showAlert('User was regstered', 'info', this.dismiss);
+      return showAlert(
+        this.props.textAlert,
+        this.props.styleAlert,
+        this.dismiss
+      );
     }
     return (
       <div className="appearWindow">
-        <h2>Adding user</h2>
-        <Form className="navbar-form input-group" onSubmit={this.handleAdd}>
+        <h2>{this.props.textWindow}</h2>
+        <Form className="navbar-form input-group" onSubmit={this.handleForm}>
           <label htmlFor="name">
             Name
             <input
@@ -88,16 +82,27 @@ class AddUser extends Component {
             />
           </label>
           <span />
-          <button className="btn btn-primery btn-success">ADD</button>
+          <button className="btn btn-primery btn-success">
+            {this.props.action}
+          </button>
         </Form>
       </div>
     );
   }
 }
 
-export default AddUser;
+export default AddEditUser;
 
-AddUser.propTypes = {
+AddEditUser.propTypes = {
   refreshTable: PropTypes.func,
-  hideWindow: PropTypes.func
+  hideWindow: PropTypes.func,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  userId: PropTypes.number,
+  hideEditWindow: PropTypes.func,
+  method: PropTypes.func,
+  textAlert: PropTypes.string,
+  styleAlert: PropTypes.string,
+  textWindow: PropTypes.string,
+  action: PropTypes.string
 };

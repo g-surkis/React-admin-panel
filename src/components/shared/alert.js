@@ -9,14 +9,6 @@ export function showAlert(message, bsStyle, dismiss) {
     dismiss();
   }, 3000);
   return (
-    // <Alert bsStyle={bsStyle} onDismiss={dismiss}>
-    //   <h4>Success</h4>
-    //   <p>{message}</p>
-    //   <p>
-    //     <span> </span>
-    //     <Button onClick={dismiss}>Hide Alert</Button>
-    //   </p>
-    // </Alert>
     <Modal.Dialog>
       <Modal.Header>
         <Modal.Title>Success</Modal.Title>{' '}
