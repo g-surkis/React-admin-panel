@@ -1,5 +1,4 @@
-import React, { Component } from 'react'; // Line 19:  'React' must be in scope when using JSX  react/react-in-jsx-scope
-//така помилка якщо забрати
+import React from 'react';
 import { Modal, Image } from 'react-bootstrap';
 
 import close from '../../img/close.png';

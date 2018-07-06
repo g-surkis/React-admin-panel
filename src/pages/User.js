@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import { Well, PageHeader, Panel } from 'react-bootstrap';
+import { Well, PageHeader } from 'react-bootstrap';
 import { showUser } from '../services/users';
+import projectService from '../services/users2';
 
 export default class User extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class User extends Component {
     };
   }
   componentDidMount() {
-    showUser(this.props.match.params.userId).then(res => {
+    projectService.getUser(this.props.match.params.userId).then(res => {
       this.setState({ obj: res });
     });
   }
@@ -27,5 +28,3 @@ export default class User extends Component {
     );
   }
 }
-
-//propTypes не задаютьсяв цьому випадку?

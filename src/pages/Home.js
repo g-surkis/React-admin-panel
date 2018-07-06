@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { Well, PageHeader } from 'react-bootstrap';
-// import { showUser } from '../services/users';
 
 export default class Home extends Component {
   render() {

@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //import "bootstrap/dist/css/bootstrap.css";
-import { Form } from 'react-bootstrap';
-import { addUser } from '../services/users';
+import { Form, Image } from 'react-bootstrap';
+import { addUser, loadUsers } from '../services/users';
 import { showAlert } from './shared/alert';
+
+import projectService from '../services/users2';
+import close from '../img/close.png';
+import ModalDialog from './ModalDialog';
 
 class AddUser extends Component {
   constructor(props) {
@@ -35,21 +39,17 @@ class AddUser extends Component {
     this.props.hideWindow(false);
   }
 
-  handleAdd(event) {
-    event.preventDefault();
-    let name = this.state.name;
-    let email = this.state.email;
-    let userData = {
-      name,
-      email
-    };
-
+  handleAdd(userData) {
     let idNewUser;
-
-    addUser(userData) //переміщення не працює
+    projectService
+      .post(userData)
       .then(res => {
         idNewUser = res.id;
-        this.props.refreshTable({ name: name, email: email, id: idNewUser });
+        this.props.refreshTable({
+          name: userData.name,
+          email: userData.email,
+          id: idNewUser
+        });
         this.setState({ showAlert: true });
       })
       .catch(res => {
@@ -58,36 +58,21 @@ class AddUser extends Component {
   }
 
   render() {
+    console.log(this.state);
     if (this.state.showAlert) {
       return showAlert('User was regstered', 'info', this.dismiss);
     }
     return (
-      <div className="appearWindow">
-        <h2>Adding user</h2>
-        <Form className="navbar-form input-group" onSubmit={this.handleAdd}>
-          <label htmlFor="name">
-            Name
-            <input
-              type="text"
-              className="form"
-              onChange={this.handleAddName}
-              defaultValue={this.state.name}
-            />
-          </label>
-
-          <label htmlFor="email">
-            Email
-            <input
-              type="email"
-              className="form"
-              onChange={this.handleAddEmail}
-              defaultValue={this.state.email}
-            />
-          </label>
-          <span />
-          <button className="btn btn-primery btn-success">ADD</button>
-        </Form>
-      </div>
+      <ModalDialog
+        handleAction={this.handleAdd}
+        dismiss={this.dismiss}
+        onChangeName={this.handleAddName}
+        onChangeEmail={this.handleAddEmail}
+        defaultValueName={this.state.name}
+        defaultValueEmail={this.state.email}
+        label={'Add'}
+        labelHeader={'Adding user'}
+      />
     );
   }
 }

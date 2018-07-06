@@ -5,11 +5,6 @@ import { Table } from 'react-bootstrap';
 import RowTable from './RowTable';
 
 class TableUsers extends Component {
-  constructor(props) {
-    // якщо це видалити, то обновлення таблиці не працює
-    super(props);
-  }
-
   render() {
     return (
       <Table id="users" striped bordered condensed hover>

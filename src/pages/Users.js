@@ -6,7 +6,8 @@ import { PageHeader } from 'react-bootstrap';
 import AddUser from '../components/AddUser';
 import TableUsers from '../components/TableUsers';
 import { loadUsers } from '../services/users';
-// import { Alert, Button, Modal, Image } from "react-bootstrap";
+import projectService from '../services/users2';
+import Modal from './Modal';
 
 class Users extends Component {
   constructor(props) {
@@ -19,10 +20,6 @@ class Users extends Component {
 
     this.addUser = this.addUser.bind(this);
     this.loadData = this.loadData.bind(this);
-    // this.renderTableAsBackgroundToModalWindow = this.renderTableAsBackgroundToModalWindow.bind(
-    //   this
-    // );
-    // this.renderSimpleTable = this.renderSimpleTable.bind(this);
     this.hideWindowAddUser = this.hideWindowAddUser.bind(this);
     this.refreshTable = this.refreshTable.bind(this);
     this.refreshTableAfterEdit = this.refreshTableAfterEdit.bind(this);
@@ -42,7 +39,7 @@ class Users extends Component {
   }
 
   async loadData() {
-    const content = await loadUsers();
+    const content = await projectService.get();
     this.setState({ arr: content });
   }
 
@@ -53,12 +50,15 @@ class Users extends Component {
   }
 
   refreshTableAfterEdit(value) {
-    let arr = this.state.arr;
-    arr.forEach((item, i) => {
+    let arr = this.state.arr.slice();
+
+    arr.find((item, i) => {
       if (item.id === value.id) {
-        arr.splice(i, 1, value);
-      }
+        return arr.splice(i, 1, value);
+      } //є тут реторн
     });
+    // Line 63:  Arrow function expected a return value  array-callback-return
+    //не знаю шо то таке
     this.setState({ arr: arr });
   }
 
@@ -75,7 +75,7 @@ class Users extends Component {
   render() {
     let buttonAddUser;
 
-    if (this.state.addUser == false) {
+    if (this.state.addUser === false) {
       buttonAddUser = (
         <button onClick={this.addUser} className="btn btn-success">
           Add user!
@@ -104,8 +104,6 @@ class Users extends Component {
           users={this.state.arr}
           refreshTableAfterEdit={this.refreshTableAfterEdit}
           refreshTableAfterDelete={this.refreshTableAfterDelete}
-          // я думав раніше що пропси доступні всім наслідникам , а виявляється іх треба передавати через
-          //проміжні чілдри в параметрах
         />
       </div>
     );

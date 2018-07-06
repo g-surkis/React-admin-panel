@@ -47,6 +47,7 @@
   z-index: 999;
   background-color: honeydew;
   opacity: 0.92;
+  border: 1px solid gray;
 }
 
 .form {
@@ -71,6 +72,20 @@
   float: right;
 }
 
+.img_close_edit {
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
 .delete {
   position: absolute;
+}
+
+.new_row {
+  height: 33px;
+  background-color: aqua;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: background-color 3s ease-in-out 15ms;
+  animation: shadow 1.5s infinite ease;
 }

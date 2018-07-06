@@ -7,10 +7,13 @@ import { Button, Modal } from 'react-bootstrap';
 import EditUser from './EditUser';
 import { deleteUser } from '../services/users';
 import { showAlert } from './shared/alert';
+import projectService from '../services/users2';
 
 class RowTable extends Component {
   constructor(props) {
     super(props);
+
+    this.element = document.getElementById('root');
 
     this.state = {
       chekingDelete: false,
@@ -18,7 +21,9 @@ class RowTable extends Component {
       idDelete: 1000,
       idEdit: 1000,
       showUser: false,
-      edit: false
+      edit: false,
+      nameChanging: this.props.name,
+      emailChanging: this.props.email
     };
 
     this.handleEdit = this.handleEdit.bind(this);
@@ -29,6 +34,7 @@ class RowTable extends Component {
     this.handleDismiss = this.handleDismiss.bind(this);
     this.deleteModalWindow = this.deleteModalWindow.bind(this);
     this.hideEditWindow = this.hideEditWindow.bind(this);
+    this.changingEfect = this.changingEfect.bind(this);
   }
 
   handleEdit(event) {
@@ -44,7 +50,8 @@ class RowTable extends Component {
   }
 
   acceptDelete() {
-    deleteUser(this.state.idDelete)
+    projectService
+      .delete(this.state.idDelete)
       .then(res => {
         this.successDelete();
       })
@@ -90,18 +97,34 @@ class RowTable extends Component {
     );
   }
 
+  changingEfect(name, email) {
+    this.setState({ nameChanging: name, emailChanging: email });
+  }
+
   render() {
     if (this.state.chekingDelete) {
       return this.deleteModalWindow();
     } else if (this.state.edit) {
       return (
-        <EditUser
-          name={this.props.name}
-          email={this.props.email}
-          userId={this.state.idEdit}
-          hideEditWindow={this.hideEditWindow}
-          refreshTableAfterEdit={this.props.refreshTableAfterEdit}
-        />
+        // зробив так, простіше, портали пробував, не працювало в мене, або я щось не так робив.
+        //я створював в навігації пустий блок з id присвоював його тут в конструкторі в змінну, і рендерив як всхемі
+        //алерезультату не було
+        <tr className="new_row">
+          <td>
+            {this.state.idEdit}
+            <EditUser
+              name={this.props.name}
+              email={this.props.email}
+              userId={this.state.idEdit}
+              hideEditWindow={this.hideEditWindow}
+              refreshTableAfterEdit={this.props.refreshTableAfterEdit}
+              changingEfect={this.changingEfect}
+            />
+          </td>
+          <td>{this.state.nameChanging}</td>
+          <td>{this.state.emailChanging}</td>
+          <td />
+        </tr>
       );
     } else {
       return (
