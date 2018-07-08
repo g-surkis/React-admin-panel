@@ -16,7 +16,7 @@ export default class Navigation extends Component {
       <Router history={history}>
         <div>
           <Panel bsStyle="primary">
-            <Panel.Title>Admin Panel</Panel.Title>
+            <Panel.Title>React Admin Panel</Panel.Title>
           </Panel>
           <ul>
             <li>

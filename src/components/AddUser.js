@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-//import "bootstrap/dist/css/bootstrap.css";
-import { Form, Image } from 'react-bootstrap';
-import { addUser, loadUsers } from '../services/users';
 import { showAlert } from './shared/alert';
 
-import projectService from '../services/users2';
-import close from '../img/close.png';
+import projectService from '../services/users';
 import ModalDialog from './ModalDialog';
 
 class AddUser extends Component {
@@ -15,8 +11,6 @@ class AddUser extends Component {
     super(props);
 
     this.state = {
-      name: '',
-      email: '',
       showAlert: false
     };
 
@@ -58,9 +52,8 @@ class AddUser extends Component {
   }
 
   render() {
-    console.log(this.state);
     if (this.state.showAlert) {
-      return showAlert('User was regstered', 'info', this.dismiss);
+      return showAlert('User was registered', 'info', this.dismiss);
     }
     return (
       <ModalDialog

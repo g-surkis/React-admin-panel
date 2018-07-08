@@ -89,3 +89,17 @@
   transition: background-color 3s ease-in-out 15ms;
   animation: shadow 1.5s infinite ease;
 }
+.new_row > td {
+  background-color: aqua;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: background-color 3s ease-in-out 15ms;
+  animation: shadow 1.5s infinite ease;
+}
+
+.deleteRow > td {
+  height: 33px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.deleteRow > td {
+  background-color: red;
+}

@@ -10,8 +10,8 @@ export default class ModalDialog extends Component {
     super(props);
 
     this.state = {
-      name: this.props.name,
-      email: this.props.email
+      name: this.props.defaultValueName,
+      email: this.props.defaultValueEmail
     };
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -20,18 +20,19 @@ export default class ModalDialog extends Component {
 
   handleChangeName(event) {
     this.setState({ name: event.target.value });
-    this.props.changingEfect(event.target.value, this.state.email);
+    if (this.props.label === 'Edit') {
+      this.props.changingEfect(event.target.value, this.state.email);
+    }
   }
 
   handleChangeEmail(event) {
     //чомусь цей метод наверх не пердається, це через event?
+    //бачив документації що функції event обгортали і так передавали
     this.setState({ email: event.target.value });
-    this.props.changingEfect(this.state.name, event.target.value);
+    if (this.props.label === 'Edit') {
+      this.props.changingEfect(this.state.name, event.target.value);
+    }
   }
-
-  //   componentDidMount(){
-  //       this.setState({name: this.props.name, email: this.props.email});
-  //   }
 
   handleForm(event) {
     event.preventDefault();
@@ -45,7 +46,6 @@ export default class ModalDialog extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="appearWindow">
         <Image
@@ -84,3 +84,14 @@ export default class ModalDialog extends Component {
     );
   }
 }
+ModalDialog.propTypes = {
+  changingEfect: PropTypes.func,
+  defaultValueEmail: PropTypes.string,
+  defaultValueName: PropTypes.string,
+  dismiss: PropTypes.func,
+  email: PropTypes.string,
+  handleAction: PropTypes.func,
+  label: PropTypes.string,
+  labelHeader: PropTypes.string,
+  name: PropTypes.string
+};

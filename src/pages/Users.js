@@ -5,9 +5,7 @@ import { PageHeader } from 'react-bootstrap';
 
 import AddUser from '../components/AddUser';
 import TableUsers from '../components/TableUsers';
-import { loadUsers } from '../services/users';
-import projectService from '../services/users2';
-import Modal from './Modal';
+import projectService from '../services/users';
 
 class Users extends Component {
   constructor(props) {
@@ -96,6 +94,7 @@ class Users extends Component {
       <div className="container">
         <PageHeader>
           <small>List of Users</small>
+          <div id="alert" />
         </PageHeader>
         <div className="inputInternalIndent" />
         {buttonAddUser}

@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-// import ReactDOM from "react-dom";
+import ReactDOM from 'react';
+
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Button, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import EditUser from './EditUser';
-import { deleteUser } from '../services/users';
-import { showAlert } from './shared/alert';
-import projectService from '../services/users2';
+import DeleteUser from './DeleteUser';
 
 class RowTable extends Component {
   constructor(props) {
     super(props);
 
-    this.element = document.getElementById('root');
+    this.element = document.getElementById('alert');
 
     this.state = {
       chekingDelete: false,
-      showAlert: false,
       idDelete: 1000,
       idEdit: 1000,
       showUser: false,
@@ -28,11 +26,8 @@ class RowTable extends Component {
 
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-    this.acceptDelete = this.acceptDelete.bind(this);
-    this.cancelDelete = this.cancelDelete.bind(this);
-    this.successDelete = this.successDelete.bind(this);
-    this.handleDismiss = this.handleDismiss.bind(this);
-    this.deleteModalWindow = this.deleteModalWindow.bind(this);
+    this.hideDeleteWindow = this.hideDeleteWindow.bind(this);
+    this.dismiss = this.dismiss.bind(this);
     this.hideEditWindow = this.hideEditWindow.bind(this);
     this.changingEfect = this.changingEfect.bind(this);
   }
@@ -44,57 +39,20 @@ class RowTable extends Component {
   handleDelete(event) {
     this.setState({
       idDelete: event.target.id,
-      nameWillDelete: event.target.username,
       chekingDelete: true
     });
   }
 
-  acceptDelete() {
-    projectService
-      .delete(this.state.idDelete)
-      .then(res => {
-        this.successDelete();
-      })
-      .catch(function(res) {});
-    this.setState({ chekingDelete: false });
-  }
-
-  successDelete() {
-    this.props.refreshTableAfterDelete(+this.state.idDelete);
-    showAlert('User was deleted', 'info', this.handleDismiss);
-  }
-
-  handleDismiss() {
+  dismiss() {
     this.setState({ showAlert: false });
   }
 
-  cancelDelete() {
+  hideDeleteWindow() {
     this.setState({ chekingDelete: false });
   }
 
   hideEditWindow(value) {
     this.setState({ edit: value });
-  }
-
-  deleteModalWindow() {
-    return (
-      <Modal.Dialog>
-        <Modal.Header>
-          <Modal.Title>Delete User?</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>Warning! Removal is irreversible </Modal.Body>
-
-        <Modal.Footer>
-          <Button bsStyle="danger" onClick={this.acceptDelete}>
-            Delete
-          </Button>
-          <Button bsStyle="info" onClick={this.cancelDelete}>
-            Cencel
-          </Button>
-        </Modal.Footer>
-      </Modal.Dialog>
-    );
   }
 
   changingEfect(name, email) {
@@ -103,12 +61,28 @@ class RowTable extends Component {
 
   render() {
     if (this.state.chekingDelete) {
-      return this.deleteModalWindow();
+      //прокоментуй моє використання порталу, в мене не працює
+      // return ReactDOM.createPortal(
+      //   <DeleteUser
+      //     hideDeleteWindow={this.hideDeleteWindow}
+      //     idDelete={+this.state.idDelete}
+      //     successDelete={this.successDelete}
+      //     refreshTableAfterDelete={this.props.refreshTableAfterDelete}
+      //   />,
+      //   this.element
+      // );
+      return (
+        <DeleteUser
+          hideDeleteWindow={this.hideDeleteWindow}
+          idDelete={+this.state.idDelete}
+          successDelete={this.successDelete}
+          refreshTableAfterDelete={this.props.refreshTableAfterDelete}
+          name={this.props.name}
+          email={this.props.email}
+        />
+      );
     } else if (this.state.edit) {
       return (
-        // зробив так, простіше, портали пробував, не працювало в мене, або я щось не так робив.
-        //я створював в навігації пустий блок з id присвоював його тут в конструкторі в змінну, і рендерив як всхемі
-        //алерезультату не було
         <tr className="new_row">
           <td>
             {this.state.idEdit}
