@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { PageHeader } from 'react-bootstrap';
 
-import AddUser from '../components/AddUser';
+import AddEditUser from '../components/AddEditUser';
 import TableUsers from '../components/TableUsers';
 import projectService from '../services/users';
 
@@ -82,9 +82,13 @@ class Users extends Component {
     } else {
       buttonAddUser = (
         <div>
-          <AddUser
-            hideWindow={this.hideWindowAddUser}
+          <AddEditUser
+            label={'Add'}
+            labelHeader={'Adding user'}
+            hideDialogWindow={this.hideWindowAddUser}
             refreshTable={this.refreshTable}
+            textAlert={'User was registered'}
+            styleAlert={'info'}
           />
         </div>
       );

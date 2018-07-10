@@ -1,3 +1,5 @@
+//тут я залишив старий код для зразка, щоб з нуля не писати
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
