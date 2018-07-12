@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { Button } from 'react-bootstrap';
-import EditUser from './EditUser';
+import AddEditUser from './AddEditUser';
 import DeleteUser from './DeleteUser';
 
 class RowTable extends Component {
@@ -28,7 +28,7 @@ class RowTable extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.hideDeleteWindow = this.hideDeleteWindow.bind(this);
     this.dismiss = this.dismiss.bind(this);
-    this.hideEditWindow = this.hideEditWindow.bind(this);
+    this.hideDialogWindow = this.hideDialogWindow.bind(this);
     this.changingEfect = this.changingEfect.bind(this);
   }
 
@@ -51,7 +51,7 @@ class RowTable extends Component {
     this.setState({ chekingDelete: false });
   }
 
-  hideEditWindow(value) {
+  hideDialogWindow(value) {
     this.setState({ edit: value });
   }
 
@@ -86,13 +86,17 @@ class RowTable extends Component {
         <tr className="new_row">
           <td>
             {this.state.idEdit}
-            <EditUser
+            <AddEditUser
+              label={'Edit'}
+              labelHeader={'Edding user'}
               name={this.props.name}
               email={this.props.email}
-              userId={this.state.idEdit}
-              hideEditWindow={this.hideEditWindow}
+              userId={+this.state.idEdit}
+              hideDialogWindow={this.hideDialogWindow}
               refreshTableAfterEdit={this.props.refreshTableAfterEdit}
               changingEfect={this.changingEfect}
+              textAlert={'Congratulations! You jast have corrected user data!.'}
+              styleAlert={'info'}
             />
           </td>
           <td>{this.state.nameChanging}</td>
