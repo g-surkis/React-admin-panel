@@ -10,7 +10,7 @@ export default class DeleteUser extends Component {
   constructor(props) {
     super(props);
 
-    this.element = document.getElementById('root');
+    // this.element = document.getElementById('root');
 
     this.state = {
       showDeleteModalWindow: true,

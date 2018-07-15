@@ -60,15 +60,24 @@ class RowTable extends Component {
   }
 
   render() {
+    //   const deleteUser = <DeleteUser
+    //   hideDeleteWindow={this.hideDeleteWindow}
+    //   idDelete={+this.state.idDelete}
+    //   successDelete={this.successDelete}
+    //   refreshTableAfterDelete={this.props.refreshTableAfterDelete}
+    // />
     if (this.state.chekingDelete) {
-      //прокоментуй моє використання порталу, в мене не працює
+      //знову вебпак видає createPortal is not a function
+      //this.element тепер існує завжди
       // return ReactDOM.createPortal(
       //   <DeleteUser
-      //     hideDeleteWindow={this.hideDeleteWindow}
-      //     idDelete={+this.state.idDelete}
-      //     successDelete={this.successDelete}
-      //     refreshTableAfterDelete={this.props.refreshTableAfterDelete}
-      //   />,
+      //   hideDeleteWindow={this.hideDeleteWindow}
+      //   idDelete={+this.state.idDelete}
+      //   successDelete={this.successDelete}
+      //   refreshTableAfterDelete={this.props.refreshTableAfterDelete}
+      //   name={this.props.name}
+      //   email={this.props.email}
+      // />,
       //   this.element
       // );
       return (

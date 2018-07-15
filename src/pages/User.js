@@ -8,21 +8,21 @@ export default class User extends Component {
     super(props);
 
     this.state = {
-      obj: {}
+      user: {}
     };
   }
   componentDidMount() {
     projectService.getUser(this.props.match.params.userId).then(res => {
-      this.setState({ obj: res });
+      this.setState({ user: res });
     });
   }
 
   render() {
     return (
       <div>
-        <PageHeader>{this.state.obj.name}</PageHeader>
-        <Well bsSize="small">ID: {this.state.obj.id}</Well>
-        <Well bsSize="small">E-mail: {this.state.obj.email}</Well>
+        <PageHeader>{this.state.user.name}</PageHeader>
+        <Well bsSize="small">ID: {this.state.user.id}</Well>
+        <Well bsSize="small">E-mail: {this.state.user.email}</Well>
       </div>
     );
   }

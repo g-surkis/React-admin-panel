@@ -11,17 +11,33 @@ class Users extends Component {
   constructor(props) {
     super(props);
 
+    // this.content = await projectService.get();
+
     this.state = {
       addUser: false,
-      arr: []
+      //також я бачив такі визови в прикладах але щось не так тут, але мабуть через асинхронність не працює
+      //  arr:   projectService.get()
+
+      arr: [] //якось треба оголосити state типом array, бо судячи з всього проміс повертає тип object  і state.arr стає
+      //object, і відповідно arr.map не може його опрацювати
     };
 
     this.addUser = this.addUser.bind(this);
-    this.loadData = this.loadData.bind(this);
     this.hideWindowAddUser = this.hideWindowAddUser.bind(this);
     this.refreshTable = this.refreshTable.bind(this);
     this.refreshTableAfterEdit = this.refreshTableAfterEdit.bind(this);
     this.refreshTableAfterDelete = this.refreshTableAfterDelete.bind(this);
+  }
+
+  componentDidMount() {
+    (async () => {
+      //працює
+      const content = await projectService.get();
+      this.setState({ arr: content });
+
+      // а так хотів скоротити - не працює
+      // await this.setState({ arr: projectService.get()});
+    })();
   }
 
   addUser(value) {
@@ -32,15 +48,6 @@ class Users extends Component {
     this.setState({ addUser: value });
   }
 
-  componentDidMount() {
-    this.loadData();
-  }
-
-  async loadData() {
-    const content = await projectService.get();
-    this.setState({ arr: content });
-  }
-
   refreshTable(value) {
     let arr = this.state.arr;
     let newArr = [...arr, value];
@@ -49,24 +56,16 @@ class Users extends Component {
 
   refreshTableAfterEdit(value) {
     let arr = this.state.arr.slice();
-
     arr.find((item, i) => {
-      if (item.id === value.id) {
-        return arr.splice(i, 1, value);
-      } //є тут реторн
+      item.id !== value.id ? false : arr.splice(i, 1, value);
     });
-    // Line 63:  Arrow function expected a return value  array-callback-return
-    //не знаю шо то таке
     this.setState({ arr: arr });
   }
 
   refreshTableAfterDelete(value) {
-    let arr = this.state.arr;
-    arr.forEach((item, i) => {
-      if (item.id === value) {
-        arr.splice(i, 1);
-      }
-    });
+    let arr = this.state.arr.slice();
+    let num = arr.indexOf(value);
+    arr.splice(num, 1);
     this.setState({ arr: arr });
   }
 

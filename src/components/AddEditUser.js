@@ -50,7 +50,7 @@ class AddEditUser extends Component {
           });
         })
         .catch(res => {
-          this.setState({ showAlert: true, success: false });
+          this.setState({ showAlert: true });
         });
     }
     if (this.props.label === 'Add') {
@@ -71,16 +71,12 @@ class AddEditUser extends Component {
     }
   }
 
-  //класний метод) я його використовував при попередніх обєднаннях, а зараз якщо чесно то забув для чого
   static getDerivedStateFromProps(nextProps, prevState) {
     return { name: nextProps.name, email: nextProps.email };
   }
 
-  //   при демонтажі жаного компонента надсилаються state, я не можу їх відловити
   render() {
     if (this.state.showAlert) {
-      console.log(this.props);
-
       return showAlert(
         this.props.textAlert,
         this.props.styleAlert,

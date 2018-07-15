@@ -5,6 +5,9 @@ import { Table } from 'react-bootstrap';
 import RowTable from './RowTable';
 
 class TableUsers extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <Table id="users" striped bordered condensed hover>
@@ -27,6 +30,7 @@ class TableUsers extends Component {
                 showUser={this.showUser}
                 refreshTableAfterEdit={this.props.refreshTableAfterEdit}
                 refreshTableAfterDelete={this.props.refreshTableAfterDelete}
+                // {...this.props} //хотів замінити наскрізну передачу пропсів таким записом, але не працює. це треба
               />
             );
           })}

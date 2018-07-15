@@ -15,8 +15,6 @@ export default {
       error.response = response;
       throw error;
     }),
-  //незнаю як обєднати функції вище і нище в одну, бо коли не передається id то викидається помилка, бо мабуть в
-  //запит зписується undefined
   getUser: userId =>
     fetch(host + userId, {
       headers: {

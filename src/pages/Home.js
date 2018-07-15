@@ -9,10 +9,8 @@ export default class Home extends Component {
         <PageHeader>
           <small>React Admin Panel</small>
         </PageHeader>
-        <Well bsSize="small">Author: G.Pinkas</Well>
-        <Well bsSize="small">Tutor: VolVol</Well>
 
-        <p className="copyrigth">&copy; Warsaw, 2018</p>
+        <p className="copyrigth">&copy; 2018</p>
       </div>
     );
   }
