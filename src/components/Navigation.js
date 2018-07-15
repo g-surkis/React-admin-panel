@@ -7,37 +7,44 @@ import { Panel } from 'react-bootstrap';
 import Home from '../pages/Home';
 import Users from '../pages/Users';
 import User from '../pages/User';
+import Footer from './Footer';
 
 const history = createBrowserHistory();
 
 export default class Navigation extends Component {
   render() {
     return (
-      <Router history={history}>
-        <div>
-          <Panel bsStyle="primary">
-            <Panel.Title>React Admin Panel</Panel.Title>
-          </Panel>
-          <ul>
-            <li>
-              <NavLink to="/" activeclassname="selected">
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/users" activeclassname="selected">
-                Users
-              </NavLink>
-            </li>
-          </ul>
+      <React.StrictMode>
+        <Router history={history}>
+          <div>
+            <div className="top_panel">
+              <Panel bsStyle="primary">
+                <Panel.Title>
+                  <h3 className="app_header">React Admin Panel</h3>
+                </Panel.Title>
+              </Panel>
+            </div>
+            <ul>
+              <li>
+                <NavLink to="/" activeclassname="selected">
+                  Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/users" activeclassname="selected">
+                  Users
+                </NavLink>
+              </li>
+            </ul>
 
-          <hr />
-
-          <Route exact path="/" component={Home} />
-          <Route exact path="/users" component={Users} />
-          <Route path="/user/:userId" component={User} />
-        </div>
-      </Router>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/users" component={Users} />
+            <Route path="/user/:userId" component={User} />
+          </div>
+        </Router>
+        <hr />
+        <Footer />
+      </React.StrictMode>
     );
   }
 }

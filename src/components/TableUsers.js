@@ -7,7 +7,7 @@ import RowTable from './RowTable';
 class TableUsers extends Component {
   render() {
     return (
-      <Table id="users" striped bordered condensed hover>
+      <Table striped bordered condensed hover>
         <thead className="head">
           <tr>
             <th>Id</th>
@@ -25,7 +25,7 @@ class TableUsers extends Component {
                 email={item.email}
                 key={item.id}
                 showUser={this.showUser}
-                {...this.props} //замінив пряму передачу пропсів спредом
+                {...this.props}
               />
             );
           })}
@@ -38,7 +38,6 @@ export default TableUsers;
 
 TableUsers.propTypes = {
   users: PropTypes.array,
-  //також незнаю чи доречні ці записи при використанні spread
   refreshTableAfterEdit: PropTypes.func,
   refreshTableAfterDelete: PropTypes.func
 };

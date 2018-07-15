@@ -19,7 +19,7 @@ export default class User extends Component {
 
   render() {
     return (
-      <div>
+      <div className="show_user">
         <PageHeader>{this.state.user.name}</PageHeader>
         <Well bsSize="small">ID: {this.state.user.id}</Well>
         <Well bsSize="small">E-mail: {this.state.user.email}</Well>

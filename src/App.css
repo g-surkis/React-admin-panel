@@ -2,40 +2,37 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+html {
+  height: 98%;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+body {
+  position: relative;
+  min-height: 100%;
 }
 
-.App-title {
-  font-size: 1.5em;
+root {
+  padding-bottom: 40px;
 }
 
-.App-intro {
-  font-size: large;
+.app_header {
+  margin: 5px;
+  padding: 15px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+top_panel {
+  padding: 5px;
+  margin: 5px;
+  font-family: 'Arial, Helvetica, sans-serif';
 }
 
 .head > tr > th {
   text-align: center;
 }
-
-.appearWindow {
+.ordinary_row > td {
+  text-align: center;
+}
+.appear_window {
   position: fixed;
   top: 50px;
   vertical-align: center;
@@ -54,14 +51,17 @@
   margin: 10px;
 }
 
-.inputInternalIndent {
+.input_internal_indent {
   margin-bottom: 25px;
 }
 
 .copyrigth {
   position: absolute;
-  bottom: 15px;
-  left: 45%;
+  padding-top: 30px;
+  bottom: 0;
+  padding-left: 45%;
+  width: 100%;
+  height: 40px;
 }
 
 .selected {
@@ -96,10 +96,12 @@
   animation: shadow 1.5s infinite ease;
 }
 
-.deleteRow > td {
+.delete_row > td {
   height: 33px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-.deleteRow > td {
   background-color: red;
+}
+
+.show_user {
+  margin: 25px;
 }

@@ -9,8 +9,6 @@ export default class Home extends Component {
         <PageHeader>
           <small>React Admin Panel</small>
         </PageHeader>
-
-        <p className="copyrigth">&copy; 2018</p>
       </div>
     );
   }

@@ -11,15 +11,9 @@ class Users extends Component {
   constructor(props) {
     super(props);
 
-    // this.content = await projectService.get();
-
     this.state = {
       addUser: false,
-      //також я бачив такі визови в прикладах але щось не так тут, але мабуть через асинхронність не працює
-      //  arr:   projectService.get()
-
-      arr: [] //якось треба оголосити state типом array, бо судячи з всього проміс повертає тип object  і state.arr стає
-      //object, і відповідно arr.map не може його опрацювати
+      arr: []
     };
 
     this.addUser = this.addUser.bind(this);
@@ -31,12 +25,8 @@ class Users extends Component {
 
   componentDidMount() {
     (async () => {
-      //працює
       const content = await projectService.get();
       this.setState({ arr: content });
-
-      // а так хотів скоротити - не працює
-      // await this.setState({ arr: projectService.get()});
     })();
   }
 
@@ -100,9 +90,9 @@ class Users extends Component {
           <small>List of Users</small>
           <div id="alert" />
         </PageHeader>
-        <div className="inputInternalIndent" />
+        <div className="input_internal_indent" />
         {buttonAddUser}
-        <div className="inputInternalIndent" />
+        <div className="input_internal_indent" />
         <TableUsers
           users={this.state.arr}
           refreshTableAfterEdit={this.refreshTableAfterEdit}

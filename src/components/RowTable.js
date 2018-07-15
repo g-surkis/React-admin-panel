@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactDOM from 'react';
 
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -55,26 +54,7 @@ class RowTable extends Component {
   }
 
   render() {
-    //   const deleteUser = <DeleteUser
-    //   hideDeleteWindow={this.hideDeleteWindow}
-    //   idDelete={+this.state.idDelete}
-    //   successDelete={this.successDelete}
-    //   refreshTableAfterDelete={this.props.refreshTableAfterDelete}
-    // />
     if (this.state.chekingDelete) {
-      //знову вебпак видає createPortal is not a function
-      //this.element тепер існує завжди
-      // return ReactDOM.createPortal(
-      //   <DeleteUser
-      //   hideDeleteWindow={this.hideDeleteWindow}
-      //   idDelete={+this.state.idDelete}
-      //   successDelete={this.successDelete}
-      //   refreshTableAfterDelete={this.props.refreshTableAfterDelete}
-      //   name={this.props.name}
-      //   email={this.props.email}
-      // />,
-      //   this.element
-      // );
       return (
         <DeleteUser
           hideDeleteWindow={this.hideDeleteWindow}
@@ -110,7 +90,7 @@ class RowTable extends Component {
       );
     } else {
       return (
-        <tr>
+        <tr className="ordinary_row">
           <td>
             <Link to={`/user/${this.props.id}`}>{this.props.id}</Link>
           </td>

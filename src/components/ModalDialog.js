@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Form, Image } from 'react-bootstrap';
 
 import close from '../img/close.png';
-
 export default class ModalDialog extends Component {
   constructor(props) {
     super(props);
@@ -26,8 +25,6 @@ export default class ModalDialog extends Component {
   }
 
   handleChangeEmail(event) {
-    //чомусь цей метод наверх не пердається, це через event?
-    //бачив документації що функції event обгортали і так передавали
     this.setState({ email: event.target.value });
     if (this.props.label === 'Edit') {
       this.props.changingEfect(this.state.name, event.target.value);
@@ -47,7 +44,7 @@ export default class ModalDialog extends Component {
 
   render() {
     return (
-      <div className="appearWindow">
+      <div className="appear_window">
         <Image
           src={close}
           thumbnail

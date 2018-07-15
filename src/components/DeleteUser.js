@@ -10,8 +10,6 @@ export default class DeleteUser extends Component {
   constructor(props) {
     super(props);
 
-    // this.element = document.getElementById('root');
-
     this.state = {
       showDeleteModalWindow: true,
       showAlert: false
@@ -41,7 +39,7 @@ export default class DeleteUser extends Component {
 
   deleteModalWindow() {
     return (
-      <tr className="deleteRow">
+      <tr className="delete_row">
         <td>{this.props.idDelete}</td>
         <td>{this.props.name}</td>
         <td>{this.props.email}</td>
@@ -66,12 +64,6 @@ export default class DeleteUser extends Component {
       </tr>
     );
   }
-  //тут не можу зловити помилку при ситуації коли додаєш нового користувачаі не обновляючи сторінку відразу його видаляти
-  //я переклав в перекладачі, не розумію чому того користувача реакт вважає немонтованим, якщо для нього появляється
-  //окремий компонент <RowTable>
-  // Can't call setState (or forceUpdate) on an unmounted component. This is a no-op, but it indicates a memory leak
-  //in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
-  //   in DeleteUser (at RowTable.js:71)
 
   render() {
     if (this.state.showAlert) {
