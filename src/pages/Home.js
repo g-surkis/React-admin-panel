@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Well, PageHeader } from 'react-bootstrap';
+import { PageHeader } from 'react-bootstrap';
 
 export default class Home extends Component {
   render() {

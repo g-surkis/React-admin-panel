@@ -32,6 +32,8 @@ class AddEditUser extends Component {
 
   dismiss() {
     this.setState({ showAlert: false });
+    //тут проблемка з викликом setState після демонтажу даного компоненту. я вроді в правильній послідовності викликаю
+    //але коли стрічка нижче закоментована то помилки немає
     this.props.hideDialogWindow(false);
   }
 

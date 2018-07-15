@@ -5,9 +5,6 @@ import { Table } from 'react-bootstrap';
 import RowTable from './RowTable';
 
 class TableUsers extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <Table id="users" striped bordered condensed hover>
@@ -28,9 +25,7 @@ class TableUsers extends Component {
                 email={item.email}
                 key={item.id}
                 showUser={this.showUser}
-                refreshTableAfterEdit={this.props.refreshTableAfterEdit}
-                refreshTableAfterDelete={this.props.refreshTableAfterDelete}
-                // {...this.props} //хотів замінити наскрізну передачу пропсів таким записом, але не працює. це треба
+                {...this.props} //замінив пряму передачу пропсів спредом
               />
             );
           })}
@@ -42,5 +37,8 @@ class TableUsers extends Component {
 export default TableUsers;
 
 TableUsers.propTypes = {
-  users: PropTypes.array
+  users: PropTypes.array,
+  //також незнаю чи доречні ці записи при використанні spread
+  refreshTableAfterEdit: PropTypes.func,
+  refreshTableAfterDelete: PropTypes.func
 };

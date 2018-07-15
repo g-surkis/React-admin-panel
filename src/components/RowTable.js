@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react';
+// import ReactDOM from 'react';
 
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -27,7 +27,6 @@ class RowTable extends Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.hideDeleteWindow = this.hideDeleteWindow.bind(this);
-    this.dismiss = this.dismiss.bind(this);
     this.hideDialogWindow = this.hideDialogWindow.bind(this);
     this.changingEfect = this.changingEfect.bind(this);
   }
@@ -41,10 +40,6 @@ class RowTable extends Component {
       idDelete: event.target.id,
       chekingDelete: true
     });
-  }
-
-  dismiss() {
-    this.setState({ showAlert: false });
   }
 
   hideDeleteWindow() {

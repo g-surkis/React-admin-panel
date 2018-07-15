@@ -57,9 +57,10 @@ class Users extends Component {
   refreshTableAfterEdit(value) {
     let arr = this.state.arr.slice();
     arr.find((item, i) => {
-      item.id !== value.id ? false : arr.splice(i, 1, value);
+      return item.id !== value.id ? false : arr.splice(i, 1, value);
     });
     this.setState({ arr: arr });
+    return;
   }
 
   refreshTableAfterDelete(value) {
