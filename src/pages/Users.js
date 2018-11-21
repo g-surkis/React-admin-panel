@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import { PageHeader } from 'react-bootstrap';
 
 import AddEditUser from '../components/AddEditUser';
 import TableUsers from '../components/TableUsers';
 import projectService from '../services/users';
-
-0;
 
 class Users extends Component {
   constructor(props) {
@@ -106,4 +102,5 @@ class Users extends Component {
     );
   }
 }
+
 export default Users;
