@@ -7,9 +7,6 @@ import AddEditUser from '../components/AddEditUser';
 import TableUsers from '../components/TableUsers';
 import projectService from '../services/users';
 
-import fetchUsers from '../actions/users';
-import { connect } from 'react-redux';
-
 class Users extends Component {
   constructor(props) {
     super(props);
@@ -31,18 +28,6 @@ class Users extends Component {
       const content = await projectService.get();
       this.setState({ arr: content });
     })();
-    // dispatch => {return dispatch(fetchUsers())};
-  }
-
-  componentDidUpdate(state) {
-    // console.log(state.users.users.then(res=>console.log(res)));//так не дозволяє
-
-    console.log(state.users.users); //так видає Promice.resolved із значенням
-    //масив юзерів. незнаю як достати його звідти
-    //також не розумію як вийшла вкладеність імен user.user
-
-    // dispatch({type: 'FETCH_USERS', payload: this.state.arr })
-    //пробував записати через локальний стейт але нема доступу до dispatch
   }
 
   addUser(value) {
@@ -61,10 +46,9 @@ class Users extends Component {
 
   refreshTableAfterEdit(value) {
     let arr = this.state.arr.slice();
-    let index = arr.findIndex(item => {
-      return item.id !== value.id ? false : index;
+    arr.find((item, i) => {
+      return item.id !== value.id ? false : arr.splice(i, 1, value);
     });
-    arr.splice(index, 1, value);
     this.setState({ arr: arr });
     return;
   }
@@ -77,7 +61,6 @@ class Users extends Component {
   }
 
   render() {
-    console.log(this.props);
     let buttonAddUser;
 
     if (this.state.addUser === false) {
@@ -119,23 +102,4 @@ class Users extends Component {
     );
   }
 }
-function mapStateToProps(state) {
-  return { users: state.Users };
-}
-//для асинхронності застосовують міделвери, я не можу тут їх прилаштувати
-function mapDispatchToProps(dispatch) {
-  return {
-    onDefaultClick: () => {
-      //дана ф-я не використовується, я вчусь
-      //використовувати всі можливості redux
-      dispatch(fetchUsers());
-    }, //колбеки мають бути спочатку?
-    Users: dispatch(fetchUsers()) //тут обовязково викликати action creator? без цього
-    // визову state в props не попадає
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Users);
+export default Users;
